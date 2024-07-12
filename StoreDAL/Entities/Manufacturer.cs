@@ -18,7 +18,7 @@ public class Manufacturer : BaseEntity
     }
 
     [Column("manufacturer_name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; }
+    public virtual ICollection<Product>? Products { get; set; }
 }

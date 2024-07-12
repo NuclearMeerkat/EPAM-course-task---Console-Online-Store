@@ -27,15 +27,15 @@ public class CustomerOrder : BaseEntity
     public int UserId { get; set; }
 
     [Column("operation_time")]
-    public string OperationTime { get; set; }
+    public string? OperationTime { get; set; }
 
     [Column("order_state_id")]
     [ForeignKey(nameof(State))]
     public int OrderStateId { get; set; }
 
-    public User User { get; set; }
+    public User? User { get; set; }
 
-    public OrderState State { get; set; }
+    public OrderState? State { get; set; }
 
-    public virtual IList<OrderDetail> Details { get; set; }
+    public virtual IList<OrderDetail>? Details { get; set; }
 }

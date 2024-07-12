@@ -26,22 +26,22 @@ public class User : BaseEntity
     }
 
     [Column("first_name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     [Column("last_name")]
-    public string LastName { get; set; }
+    public string? LastName { get; set; }
 
     [Column("login")]
-    public string Login { get; set; }
+    public string? Login { get; set; }
 
     [Column("Password")]
-    public string Password { get; set; }
+    public string? Password { get; set; }
 
     [Column("user_role_id")]
     [ForeignKey(nameof(Role))]
     public int RoleId { get; set; }
 
-    public UserRole Role { get; set; }
+    public UserRole? Role { get; set; }
 
-    public virtual IList<CustomerOrder> Order { get; set; }
+    public virtual IList<CustomerOrder>? Order { get; set; }
 }

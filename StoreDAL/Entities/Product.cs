@@ -36,11 +36,11 @@ public class Product : BaseEntity
     public decimal UnitPrice { get; set; }
 
     [Column("comment")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
-    public ProductTitle Title { get; set; }
+    public ProductTitle? Title { get; set; }
 
-    public Manufacturer Manufacturer { get; set; }
+    public Manufacturer? Manufacturer { get; set; }
 
-    public virtual IList<OrderDetail> OrderDetails { get; set; }
+    public virtual IList<OrderDetail>? OrderDetails { get; set; }
 }

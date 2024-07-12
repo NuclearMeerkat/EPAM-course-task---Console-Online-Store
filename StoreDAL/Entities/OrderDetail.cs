@@ -33,7 +33,7 @@ public class OrderDetail : BaseEntity
     [Column("product_amount")]
     public int ProductAmount { get; set; }
 
-    public CustomerOrder Order { get; set; }
+    public CustomerOrder? Order { get; set; }
 
-    public Product Product { get; set; }
+    public Product? Product { get; set; }
 }

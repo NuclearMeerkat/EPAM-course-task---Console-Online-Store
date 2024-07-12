@@ -21,7 +21,7 @@ public class OrderState : BaseEntity
     }
 
     [Column("state_name")]
-    public string StateName { get; set; }
+    public string? StateName { get; set; }
 
-    public virtual IList<CustomerOrder> Order { get; set; }
+    public virtual IList<CustomerOrder>? Order { get; set; }
 }

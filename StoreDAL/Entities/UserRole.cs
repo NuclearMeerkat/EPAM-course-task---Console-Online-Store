@@ -20,7 +20,7 @@ public class UserRole : BaseEntity
     }
 
     [Column("user_role_name")]
-    public string RoleName { get; set; }
+    public string? RoleName { get; set; }
 
-    public virtual IList<User> User { get; set; }
+    public virtual IList<User>? User { get; set; }
 }
