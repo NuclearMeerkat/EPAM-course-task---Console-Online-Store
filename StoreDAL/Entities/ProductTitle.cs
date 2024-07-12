@@ -8,7 +8,6 @@ public class ProductTitle : BaseEntity
     public ProductTitle()
         : base()
     {
-        this.Category = new Category();
     }
 
     public ProductTitle(int id, string title, int categoryId)
@@ -16,7 +15,6 @@ public class ProductTitle : BaseEntity
     {
         this.Title = title;
         this.CategoryId = categoryId;
-        this.Category = new Category();
     }
 
     [Column("product_title")]
