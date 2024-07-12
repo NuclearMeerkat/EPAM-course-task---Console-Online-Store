@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-// ToDo: add atribute here
+[Table("customer_order_details")]
 public class OrderDetail : BaseEntity
 {
     public OrderDetail()
@@ -19,16 +19,18 @@ public class OrderDetail : BaseEntity
         this.ProductAmount = amount;
     }
 
-    // ToDo: add atribute here
+    [Column("customer_order_id")]
+    [ForeignKey(nameof(Order))]
     public int OrderId { get; set; }
 
-    // ToDo: add atribute here
+    [Column("product_id")]
+    [ForeignKey(nameof(Product))]
     public int ProductId { get; set; }
 
-    // ToDo: add atribute here
+    [Column("price")]
     public decimal Price { get; set; }
 
-    // ToDo: add atribute here
+    [Column("product_amount")]
     public int ProductAmount { get; set; }
 
     public CustomerOrder Order { get; set; }

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-// ToDo: add atribute here
+[Table("product_titles")]
 public class ProductTitle : BaseEntity
 {
     public ProductTitle()
@@ -17,10 +17,11 @@ public class ProductTitle : BaseEntity
         this.CategoryId = categoryId;
     }
 
-    // ToDo: add atribute here
+    [Column("product_title")]
     public string Title { get; set; }
 
-    // ToDo: add atribute here
+    [Column("category_id")]
+    [ForeignKey(nameof(Category))]
     public int CategoryId { get; set; }
 
     public Category Category { get; set; }

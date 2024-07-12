@@ -31,17 +31,38 @@ public class TestDataFactory : AbstractDataFactory
 
     public override CustomerOrder[] GetCustomerOrderData()
     {
-        return Array.Empty<CustomerOrder>();
+        return new[]
+        {
+            new CustomerOrder(1, "2023-07-01 10:00:00", 1, 1),
+            new CustomerOrder(2, "2023-07-03 14:30:00", 2, 4),
+            new CustomerOrder(3, "2023-07-04 09:00:00", 3, 1),
+            new CustomerOrder(4, "2023-07-05 16:45:00", 4, 7),
+            new CustomerOrder(5, "2023-07-06 12:00:00", 5, 6),
+        };
     }
 
     public override Manufacturer[] GetManufacturerData()
     {
-        return Array.Empty<Manufacturer>();
+        return new[]
+        {
+            new Manufacturer(1, "Fresh Farms"),
+            new Manufacturer(2, "Ocean Harvest"),
+            new Manufacturer(3, "Dairy Best"),
+            new Manufacturer(4, "Tech World"),
+            new Manufacturer(5, "Gourmet Spices"),
+        };
     }
 
     public override OrderDetail[] GetOrderDetailData()
     {
-        return Array.Empty<OrderDetail>();
+        return new[]
+        {
+            new OrderDetail(1, 1, 1, 2.99m, 5),
+            new OrderDetail(2, 2, 4, 15.99m, 1),
+            new OrderDetail(3, 3, 3, 1.49m, 10),
+            new OrderDetail(4, 4, 2, 1.49m, 5),
+            new OrderDetail(5, 5, 5, 3.99m, 2),
+        };
     }
 
     public override OrderState[] GetOrderStateData()
@@ -61,17 +82,42 @@ public class TestDataFactory : AbstractDataFactory
 
     public override Product[] GetProductData()
     {
-        return Array.Empty<Product>();
+        return new[]
+        {
+            new Product(1, 1, 1, "Fresh apples", 2.99m),
+            new Product(2, 2, 2, "Bottled water", 1.49m),
+            new Product(3, 3, 3, "Carrots", 3.99m),
+            new Product(4, 4, 2, "Salmon fillets", 15.99m),
+            new Product(5, 5, 3, "Whole milk", 3.99m),
+            new Product(6, 6, 4, "Blender", 199.99m),
+            new Product(7, 7, 5, "Mixed spices", 4.99m),
+        };
     }
 
     public override ProductTitle[] GetProductTitleData()
     {
-        return Array.Empty<ProductTitle>();
+        return new[]
+        {
+            new ProductTitle(1, "Apple", 1),
+            new ProductTitle(2, "Bottled Water", 2),
+            new ProductTitle(3, "Carrot", 3),
+            new ProductTitle(4, "Salmon Fillets", 4),
+            new ProductTitle(5, "Whole Milk", 7),
+            new ProductTitle(6, "Blender", 11),
+            new ProductTitle(7, "Mixed Spices", 12),
+        };
     }
 
     public override User[] GetUserData()
     {
-        return Array.Empty<User>();
+        return new[]
+        {
+            new User(1, "John", "Doe", "johndoe", "password123", 2),
+            new User(2, "Jane", "Smith", "janesmith", "password456", 2),
+            new User(3, "Emily", "Johnson", "emilyj", "password789", 2),
+            new User(4, "Michael", "Brown", "michaelb", "password321", 2),
+            new User(5, "Sarah", "Davis", "sarahd", "password654", 2),
+        };
     }
 
     public override UserRole[] GetUserRoleData()

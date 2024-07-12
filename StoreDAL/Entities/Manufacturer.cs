@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using StoreDAL.Entities;
 
-// ToDo: add atribute here
+[Table("manufacturers")]
 public class Manufacturer : BaseEntity
 {
     public Manufacturer()
@@ -17,6 +17,8 @@ public class Manufacturer : BaseEntity
         this.Name = name;
     }
 
-    // ToDo: add atribute here
+    [Column("manufacturer_name")]
     public string Name { get; set; }
+
+    public virtual ICollection<Product> Products { get; set; }
 }

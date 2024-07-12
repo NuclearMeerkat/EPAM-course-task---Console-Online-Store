@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// ToDo: add atribute here
+[Table("users")]
 public class User : BaseEntity
 {
     public User()
@@ -25,19 +25,20 @@ public class User : BaseEntity
         this.RoleId = roleId;
     }
 
-    // ToDo: add atribute here
+    [Column("first_name")]
     public string Name { get; set; }
 
-    // ToDo: add atribute here
+    [Column("last_name")]
     public string LastName { get; set; }
 
-    // ToDo: add atribute here
+    [Column("login")]
     public string Login { get; set; }
 
-    // ToDo: add atribute here
+    [Column("Password")]
     public string Password { get; set; }
 
-    // ToDo: add atribute here
+    [Column("user_role_id")]
+    [ForeignKey(nameof(Role))]
     public int RoleId { get; set; }
 
     public UserRole Role { get; set; }
