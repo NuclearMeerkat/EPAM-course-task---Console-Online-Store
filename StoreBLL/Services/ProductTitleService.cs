@@ -9,35 +9,72 @@ using StoreBLL.Models;
 using StoreDAL.Data;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
+using StoreDAL.Repository;
 
 public class ProductTitleService : ICrud
 {
+    private readonly IProductTitleRepository productTitleRepository;
+
     public ProductTitleService(StoreDbContext context)
     {
+        this.productTitleRepository = new ProductTitleRepository(context);
     }
 
     public void Add(AbstractModel model)
     {
-        throw new NotImplementedException();
+        var x = (ProductTitleModel)model;
+        var titleEntity = new ProductTitle
+        {
+            Id = x.Id,
+            Title = x.Title,
+            CategoryId = x.CategoryId,
+        };
+        this.productTitleRepository.Add(titleEntity);
     }
 
     public void Delete(int modelId)
     {
-        throw new NotImplementedException();
+        this.productTitleRepository.DeleteById(modelId);
     }
 
     public IEnumerable<AbstractModel> GetAll()
     {
-        throw new NotImplementedException();
+        var titleEntities = this.productTitleRepository.GetAll();
+        return titleEntities.Select(x => new ProductTitleModel
+        {
+            Id = x.Id,
+            Title = x.Title,
+            CategoryId = x.CategoryId,
+        });
     }
 
     public AbstractModel GetById(int id)
     {
-        throw new NotImplementedException();
+        var titleEntity = this.productTitleRepository.GetById(id);
+        if (titleEntity == null)
+        {
+            return null;
+        }
+
+        return new ProductTitleModel
+        {
+            Id = titleEntity.Id,
+            Title = titleEntity.Title,
+            CategoryId = titleEntity.CategoryId,
+        };
     }
 
     public void Update(AbstractModel model)
     {
-        throw new NotImplementedException();
+        var x = (ProductTitleModel)model;
+        var titleEntity = this.productTitleRepository.GetById(x.Id);
+        if (titleEntity != null)
+        {
+            titleEntity.Id = x.Id;
+            titleEntity.Title = x.Title;
+            titleEntity.CategoryId = x.CategoryId;
+
+            this.productTitleRepository.Update(titleEntity);
+        }
     }
 }

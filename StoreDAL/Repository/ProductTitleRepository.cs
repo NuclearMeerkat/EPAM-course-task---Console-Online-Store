@@ -3,46 +3,67 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using StoreDAL.Data;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
 
 namespace StoreDAL.Repository
 {
-    public class ProductTitleRepository : IProductTitleRepository
+    public class ProductTitleRepository : AbstractRepository, IProductTitleRepository
     {
+        private readonly DbSet<ProductTitle> dbSet;
+
+        public ProductTitleRepository(StoreDbContext context)
+            : base(context)
+        {
+            this.dbSet = this.context.Set<ProductTitle>();
+        }
+
         public void Add(ProductTitle entity)
         {
-            throw new NotImplementedException();
+            this.dbSet.Add(entity);
+            this.context.SaveChanges();
         }
 
         public void Delete(ProductTitle entity)
         {
-            throw new NotImplementedException();
+            this.dbSet.Remove(entity);
+            this.context.SaveChanges();
         }
 
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var user = dbSet.Find(id);
+            if (user != null)
+            {
+                this.dbSet.Remove(user);
+                this.context.SaveChanges();
+            }
         }
 
         public IEnumerable<ProductTitle> GetAll()
         {
-            throw new NotImplementedException();
+            return this.dbSet.ToList();
         }
 
         public IEnumerable<ProductTitle> GetAll(int pageNumber, int rowCount)
         {
-            throw new NotImplementedException();
+            return this.dbSet
+                .Skip((pageNumber - 1) * rowCount)
+                .Take(rowCount)
+                .ToList();
         }
 
         public ProductTitle GetById(int id)
         {
-            throw new NotImplementedException();
+            return this.dbSet.Find(id);
         }
 
         public void Update(ProductTitle entity)
         {
-            throw new NotImplementedException();
+            this.dbSet.Update(entity);
+            this.context.SaveChanges();
         }
     }
 }

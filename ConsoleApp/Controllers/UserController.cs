@@ -12,6 +12,7 @@ using ConsoleMenu;
 using StoreDAL.Data;
 using StoreBLL.Models;
 using StoreBLL.Services;
+using StoreDAL.Repository;
 
 public static class UserController
 {
@@ -19,7 +20,16 @@ public static class UserController
 
     public static void AddUser()
     {
-        throw new NotImplementedException();
+        var userService = new UserService(context);
+        var userModel = InputHelper.ReadUserModel();
+        userService.Add(userModel);
+        Console.WriteLine("UserAdded");
+
+        var menu = new Menu(
+        new (ConsoleKey id, string caption, Action action)[]
+        {
+            (ConsoleKey.Escape, "Return to main menu", () => { }),
+        });
     }
 
     public static void UpdateUser()
@@ -39,7 +49,12 @@ public static class UserController
 
     public static void ShowAllUsers()
     {
-        throw new NotImplementedException();
+        var userService = new UserService(context);
+        var users = userService.GetAll().Select(u => (UserModel)u);
+        foreach (var user in users)
+        {
+            Console.WriteLine($"ID: {user.Id}, Name: {user.Name}, LastName: {user.LastName}, Login: {user.Login}, RoleId: {user.RoleId}");
+        }
     }
 
     public static void AddUserRole()
@@ -59,8 +74,8 @@ public static class UserController
 
     public static void ShowAllUserRoles()
     {
-        var service = new UserRoleService(context);
-        var menu = new ContextMenu(new AdminContextMenuHandler(service, InputHelper.ReadUserRoleModel), service.GetAll);
+        var rolesService = new UserRoleService(context);
+        var menu = new ContextMenu(new AdminContextMenuHandler(rolesService, InputHelper.ReadUserRoleModel), rolesService.GetAll);
         menu.Run();
     }
 
@@ -81,7 +96,9 @@ public static class UserController
 
     public static void ShowAllProductTitles()
     {
-        throw new NotImplementedException();
+        var productService = new ProductTitleService(context);
+        var menu = new ContextMenu(new AdminContextMenuHandler(productService, InputHelper.ReadProductTitleModel), productService.GetAll);
+        menu.Run();
     }
 
     public static void AddManufacturer()

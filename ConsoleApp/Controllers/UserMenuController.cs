@@ -53,8 +53,13 @@ public static class UserMenuController
             userId = 1;
             userRole = UserRoles.RegistredCustomer;
         }
-
-        // ToDo
+        else
+        {
+            Console.WriteLine("Invalid credentials, logging in as Guest.");
+            userId = 0;
+            userRole = UserRoles.Guest;
+        }
+        // TODO Login logic
     }
 
     public static void Logout()

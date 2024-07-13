@@ -32,7 +32,7 @@ namespace ConsoleMenu
 
         public override string ToString()
         {
-            return this.caption;
+             return this.caption;
         }
     }
 }

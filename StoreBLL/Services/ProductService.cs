@@ -9,14 +9,15 @@ using StoreBLL.Models;
 using StoreDAL.Data;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
+using StoreDAL.Repository;
 
 public class ProductService : ICrud
 {
     private readonly IProductRepository productRepository;
 
-    public ProductService(IProductRepository productRepository)
+    public ProductService(StoreDbContext context)
     {
-        this.productRepository = productRepository;
+        this.productRepository = new ProductRepository(context);
     }
 
     public void Add(AbstractModel model)

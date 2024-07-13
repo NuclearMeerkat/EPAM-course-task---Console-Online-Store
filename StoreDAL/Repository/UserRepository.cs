@@ -18,7 +18,7 @@ namespace StoreDAL.Repository
         public UserRepository(StoreDbContext context)
             : base(context)
         {
-            this.dbSet = context.Set<User>();
+            this.dbSet = this.context.Set<User>();
         }
 
         public void Add(User entity)

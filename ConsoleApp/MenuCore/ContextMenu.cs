@@ -15,7 +15,7 @@ namespace ConsoleMenu
     {
         private Func<IEnumerable<AbstractModel>> getAll;
 
-        public ContextMenu(AdminContextMenuHandler controller, Func<IEnumerable<AbstractModel>> getAll)
+        public ContextMenu(ContextMenuHandler controller, Func<IEnumerable<AbstractModel>> getAll)
             : base(controller.GenerateMenuItems())
         {
             this.getAll = getAll;
@@ -38,7 +38,7 @@ namespace ConsoleMenu
                     Console.WriteLine("======= Current DataSet ==========");
                     foreach (var record in this.getAll())
                     {
-                        Console.WriteLine(record);
+                        Console.WriteLine(record.ToString());
                     }
 
                     Console.WriteLine("===================================");
