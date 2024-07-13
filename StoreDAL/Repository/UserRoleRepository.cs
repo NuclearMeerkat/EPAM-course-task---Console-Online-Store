@@ -16,7 +16,7 @@ public class UserRoleRepository : AbstractRepository, IUserRoleRepository
     public UserRoleRepository(StoreDbContext context)
         : base(context)
     {
-        this.dbSet = context.Set<UserRole>();
+        this.dbSet = this.context.Set<UserRole>();
     }
 
     public void Add(UserRole entity)
@@ -27,8 +27,8 @@ public class UserRoleRepository : AbstractRepository, IUserRoleRepository
 
     public void Delete(UserRole entity)
     {
-        context.UserRoles.Remove(entity);
-        context.SaveChanges();
+        this.dbSet.Remove(entity);
+        this.context.SaveChanges();
     }
 
     public void DeleteById(int id)
@@ -43,12 +43,15 @@ public class UserRoleRepository : AbstractRepository, IUserRoleRepository
 
     public IEnumerable<UserRole> GetAll()
     {
-        return this.dbSet.ToList();
+        return this.dbSet
+            .Include(p => p.User)
+            .ToList();
     }
 
     public IEnumerable<UserRole> GetAll(int pageNumber, int rowCount)
     {
-        return context.UserRoles
+        return this.dbSet
+                .Include(p => p.User)
                 .Skip((pageNumber - 1) * rowCount)
                 .Take(rowCount)
                 .ToList();
@@ -56,18 +59,14 @@ public class UserRoleRepository : AbstractRepository, IUserRoleRepository
 
     public UserRole GetById(int id)
     {
-        return this.dbSet.Find(id);
+        return this.dbSet
+                .Include(p => p.User)
+                .FirstOrDefault(p => p.Id == id);
     }
 
     public void Update(UserRole entity)
     {
-        var existingUserRole = context.UserRoles.Find(entity.Id);
-        if (existingUserRole != null)
-        {
-            existingUserRole.RoleName = entity.RoleName;
-
-            context.UserRoles.Update(existingUserRole);
-            context.SaveChanges();
-        }
+        this.dbSet.Update(entity);
+        this.context.SaveChanges();
     }
 }

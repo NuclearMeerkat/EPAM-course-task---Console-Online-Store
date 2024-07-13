@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BCrypt;
 using Microsoft.EntityFrameworkCore;
+using StoreDAL.Data;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
-using BCrypt;
-using StoreDAL.Data;
 
 namespace StoreDAL.Repository
 {
@@ -23,35 +23,39 @@ namespace StoreDAL.Repository
 
         public void Add(User entity)
         {
-            entity.Password = BCrypt.Net.BCrypt.HashPassword(entity.Password);
-            context.Users.Add(entity);
-            context.SaveChanges();
+            this.dbSet.Add(entity);
+            this.context.SaveChanges();
         }
 
         public void Delete(User entity)
         {
-            context.Users.Remove(entity);
-            context.SaveChanges();
+            this.dbSet.Remove(entity);
+            this.context.SaveChanges();
         }
 
         public void DeleteById(int id)
         {
-            var user = context.Users.Find(id);
+            var user = dbSet.Find(id);
             if (user != null)
             {
-                context.Users.Remove(user);
-                context.SaveChanges();
+                this.dbSet.Remove(user);
+                this.context.SaveChanges();
             }
         }
 
         public IEnumerable<User> GetAll()
         {
-            return context.Users.ToList();
+            return this.dbSet
+                .Include(u => u.Role)
+                .Include(u => u.Orders)
+                .ToList();
         }
 
         public IEnumerable<User> GetAll(int pageNumber, int rowCount)
         {
-            return context.Users
+            return this.dbSet
+                .Include(u => u.Role)
+                .Include(u => u.Orders)
                 .Skip((pageNumber - 1) * rowCount)
                 .Take(rowCount)
                 .ToList();
@@ -59,27 +63,16 @@ namespace StoreDAL.Repository
 
         public User GetById(int id)
         {
-            return this.dbSet.Find(id);
+            return this.dbSet
+                .Include(u => u.Role)
+                .Include(u => u.Orders)
+                .FirstOrDefault(u => u.Id == id);
         }
 
         public void Update(User entity)
         {
-            var existingUser = context.Users.Find(entity.Id);
-            if (existingUser != null)
-            {
-                existingUser.Name = entity.Name;
-                existingUser.LastName = entity.LastName;
-                existingUser.Login = entity.Login;
-                existingUser.RoleId = entity.RoleId;
-
-                if (!string.IsNullOrEmpty(entity.Password))
-                {
-                    existingUser.Password = BCrypt.Net.BCrypt.HashPassword(entity.Password);
-                }
-
-                context.Users.Update(existingUser);
-                context.SaveChanges();
-            }
+            this.dbSet.Update(entity);
+            this.context.SaveChanges();
         }
     }
 }

@@ -12,32 +12,72 @@ using StoreDAL.Interfaces;
 
 public class ProductService : ICrud
 {
-    public ProductService(StoreDbContext context)
+    private readonly IProductRepository productRepository;
+
+    public ProductService(IProductRepository productRepository)
     {
+        this.productRepository = productRepository;
     }
 
     public void Add(AbstractModel model)
     {
-        throw new NotImplementedException();
+        var x = (ProductModel)model;
+        var productEntity = new Product
+        {
+            TitleId = x.TitleId,
+            ManufacturerId = x.ManufacturerId,
+            UnitPrice = x.UnitPrice,
+            Description = x.Description,
+        };
+        this.productRepository.Add(productEntity);
     }
 
     public void Delete(int modelId)
     {
-        throw new NotImplementedException();
+        this.productRepository.DeleteById(modelId);
     }
 
     public IEnumerable<AbstractModel> GetAll()
     {
-        throw new NotImplementedException();
+        var productEntities = this.productRepository.GetAll();
+        return productEntities.Select(p => new ProductModel
+        {
+            TitleId = p.TitleId,
+            ManufacturerId = p.ManufacturerId,
+            UnitPrice = p.UnitPrice,
+            Description = p.Description,
+        });
     }
 
     public AbstractModel GetById(int id)
     {
-        throw new NotImplementedException();
+        var productEntity = this.productRepository.GetById(id);
+        if (productEntity == null)
+        {
+            return null;
+        }
+
+        return new ProductModel
+        {
+            TitleId = productEntity.TitleId,
+            ManufacturerId = productEntity.ManufacturerId,
+            UnitPrice = productEntity.UnitPrice,
+            Description = productEntity.Description,
+        };
     }
 
     public void Update(AbstractModel model)
     {
-        throw new NotImplementedException();
+        var x = (ProductModel)model;
+        var productEntity = this.productRepository.GetById(x.Id);
+        if (productEntity != null)
+        {
+            productEntity.TitleId = x.TitleId;
+            productEntity.ManufacturerId = x.ManufacturerId;
+            productEntity.UnitPrice = x.UnitPrice;
+            productEntity.Description = x.Description;
+
+            this.productRepository.Update(productEntity);
+        }
     }
 }

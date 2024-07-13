@@ -17,7 +17,7 @@ public class AdminMainMenu : AbstractMenuCreator
                 (ConsoleKey.F5, "Cancel order", () => { Console.WriteLine("Cancel order"); }),
                 (ConsoleKey.F6, "Change order status", () => { Console.WriteLine("Add order feedback"); }),
                 (ConsoleKey.F7, "User roles", UserController.ShowAllUserRoles),
-                (ConsoleKey.F8, "Order states", ShopController.ShowAllOrderStates),
+                (ConsoleKey.F8, "Orders states", ShopController.ShowAllOrderStates),
             };
         return array;
     }

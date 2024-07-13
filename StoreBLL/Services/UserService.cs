@@ -2,42 +2,94 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Scaffolding;
 using StoreBLL.Interfaces;
 using StoreBLL.Models;
 using StoreDAL.Data;
 using StoreDAL.Entities;
 using StoreDAL.Interfaces;
+using StoreDAL.Repository;
 
 public class UserService : ICrud
 {
-    public UserService(StoreDbContext context)
+    private readonly IUserRepository userRepository;
+
+    public UserService(IUserRepository userRepository)
     {
+        this.userRepository = userRepository;
     }
 
     public void Add(AbstractModel model)
     {
-        throw new NotImplementedException();
+        var x = (UserModel)model;
+        var userEntity = new User
+        {
+            Name = x.Name,
+            LastName = x.LastName,
+            Login = x.Login,
+            Password = BCrypt.Net.BCrypt.HashPassword(x.Password),
+            RoleId = x.RoleId,
+        };
+        this.userRepository.Add(userEntity);
     }
 
     public void Delete(int modelId)
     {
-        throw new NotImplementedException();
+        this.userRepository.DeleteById(modelId);
     }
 
     public IEnumerable<AbstractModel> GetAll()
     {
-        throw new NotImplementedException();
+        var userEntities = this.userRepository.GetAll();
+        return userEntities.Select(u => new UserModel
+        {
+            Id = u.Id,
+            Name = u.Name,
+            LastName = u.LastName,
+            Login = u.Login,
+            Password = u.Password,
+            RoleId = u.RoleId,
+        });
     }
 
     public AbstractModel GetById(int id)
     {
-        throw new NotImplementedException();
+        var userEntity = this.userRepository.GetById(id);
+        if (userEntity == null)
+        {
+            return null;
+        }
+
+        return new UserModel
+        {
+            Id = userEntity.Id,
+            Name = userEntity.Name,
+            LastName = userEntity.LastName,
+            Login = userEntity.Login,
+            Password = userEntity.Password,
+            RoleId = userEntity.RoleId,
+        };
     }
 
     public void Update(AbstractModel model)
     {
-        throw new NotImplementedException();
+        var x = (UserModel)model;
+        var userEntity = this.userRepository.GetById(x.Id);
+        if (userEntity != null)
+        {
+            userEntity.Name = x.Name;
+            userEntity.LastName = x.LastName;
+            userEntity.Login = x.Login;
+            if (!string.IsNullOrEmpty(x.Password))
+            {
+                userEntity.Password = BCrypt.Net.BCrypt.HashPassword(x.Password);
+            }
+            userEntity.RoleId = x.RoleId;
+
+            this.userRepository.Update(userEntity);
+        }
     }
 }

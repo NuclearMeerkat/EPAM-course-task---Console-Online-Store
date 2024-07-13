@@ -17,7 +17,7 @@ namespace StoreDAL.Repository
         public ProductRepository(StoreDbContext context)
             : base(context)
         {
-            this.dbSet = context.Set<Product>();
+            this.dbSet = this.context.Set<Product>();
         }
 
         public void Add(Product entity)
@@ -28,8 +28,8 @@ namespace StoreDAL.Repository
 
         public void Delete(Product entity)
         {
-            context.Products.Remove(entity);
-            context.SaveChanges();
+            this.dbSet.Remove(entity);
+            this.context.SaveChanges();
         }
 
         public void DeleteById(int id)
@@ -44,12 +44,17 @@ namespace StoreDAL.Repository
 
         public IEnumerable<Product> GetAll()
         {
-            return this.dbSet.ToList();
+            return this.dbSet
+                .Include(p => p.Title)
+                .Include(p => p.Manufacturer)
+                .ToList();
         }
 
         public IEnumerable<Product> GetAll(int pageNumber, int rowCount)
         {
-            return context.Products
+            return this.dbSet
+                .Include(p => p.Title)
+                .Include(p => p.Manufacturer)
                 .Skip((pageNumber - 1) * rowCount)
                 .Take(rowCount)
                 .ToList();
@@ -57,21 +62,16 @@ namespace StoreDAL.Repository
 
         public Product GetById(int id)
         {
-            return this.dbSet.Find(id);
+            return this.dbSet
+                .Include(p => p.Title)
+                .Include(p => p.Manufacturer)
+                .FirstOrDefault(p => p.Id == id);
         }
 
         public void Update(Product entity)
         {
-            var existingProduct = context.Products.Find(entity.Id);
-            if (existingProduct != null)
-            {
-                existingProduct.TitleId = entity.TitleId;
-                existingProduct.ManufacturerId = entity.ManufacturerId;
-                existingProduct.Description = entity.Description;
-
-                context.Products.Update(existingProduct);
-                context.SaveChanges();
-            }
+            this.dbSet.Update(entity);
+            this.context.SaveChanges();
         }
     }
 }

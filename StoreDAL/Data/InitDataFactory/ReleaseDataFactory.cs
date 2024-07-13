@@ -32,7 +32,7 @@ public class ReleaseDataFactory : AbstractDataFactory
     {
         return new[]
         {
-            new OrderState(1, "New Order"),
+            new OrderState(1, "New Orders"),
             new OrderState(2, "Canceled by user"),
             new OrderState(3, "Canceled by administrator"),
             new OrderState(4, "Confirmed"),

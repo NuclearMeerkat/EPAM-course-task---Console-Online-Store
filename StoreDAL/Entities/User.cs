@@ -43,5 +43,5 @@ public class User : BaseEntity
 
     public UserRole? Role { get; set; }
 
-    public virtual IList<CustomerOrder>? Order { get; set; }
+    public virtual IList<CustomerOrder>? Orders { get; set; }
 }
