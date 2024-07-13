@@ -19,6 +19,14 @@ namespace ConsoleMenu
             this.items.Add(id, new MenuItem(caption, action));
         }
 
+        public static Menu CreateExit()
+        {
+            return new Menu(
+                [
+                    (ConsoleKey.Escape, "Return to main menu", () => { }),
+                ]);
+        }
+
         public Menu((ConsoleKey id, string caption, Action action)[] array)
         {
             this.items = new Dictionary<ConsoleKey, MenuItem>();

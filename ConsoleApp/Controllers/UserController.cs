@@ -25,11 +25,7 @@ public static class UserController
         userService.Add(userModel);
         Console.WriteLine("UserAdded");
 
-        var menu = new Menu(
-        new (ConsoleKey id, string caption, Action action)[]
-        {
-            (ConsoleKey.Escape, "Return to main menu", () => { }),
-        });
+        Menu.CreateExit();
     }
 
     public static void UpdateUser()
@@ -97,8 +93,13 @@ public static class UserController
     public static void ShowAllProductTitles()
     {
         var productService = new ProductTitleService(context);
-        var menu = new ContextMenu(new AdminContextMenuHandler(productService, InputHelper.ReadProductTitleModel), productService.GetAll);
-        menu.Run();
+        var products = productService.GetAll().Select(u => (ProductTitleModel)u);
+        foreach (var product in products)
+        {
+            Console.WriteLine($"ID: {product.Id} {product.Title} {product.CategoryId}");
+        }
+
+        Menu.CreateExit();
     }
 
     public static void AddManufacturer()
