@@ -1,5 +1,7 @@
 using ConsoleMenu;
 using ConsoleMenu.Builder;
+using StoreBLL.Models;
+using StoreBLL.Services;
 using StoreDAL.Data;
 using StoreDAL.Data.InitDataFactory;
 
@@ -36,21 +38,15 @@ public static class UserMenuController
         get { return context; }
     }
 
-    public static void Login()
+    public static void Login(UserModel registredUser)
     {
-        Console.WriteLine("Login: ");
-        var login = Console.ReadLine();
-        Console.WriteLine("Password: ");
-        var password = Console.ReadLine();
-        if (login == "admin")
+        userId = registredUser.Id;
+        if (registredUser.RoleId == 1)
         {
-            userId = 1;
             userRole = UserRoles.Administrator;
         }
-
-        if (login == "user")
+        else if (registredUser.RoleId == 2)
         {
-            userId = 1;
             userRole = UserRoles.RegistredCustomer;
         }
         else
@@ -59,7 +55,6 @@ public static class UserMenuController
             userId = 0;
             userRole = UserRoles.Guest;
         }
-        // TODO Login logic
     }
 
     public static void Logout()

@@ -23,7 +23,7 @@ namespace ConsoleMenu
         {
             return new Menu(
                 [
-                    (ConsoleKey.Escape, "Return to main menu", () => { }),
+                    (ConsoleKey.Escape, "Return to main menu <ESC>", () => { }),
                 ]);
         }
 

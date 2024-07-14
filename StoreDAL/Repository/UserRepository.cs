@@ -17,5 +17,11 @@ namespace StoreDAL.Repository
             : base(context)
         {
         }
+
+        public User GetUserByLogin(string login)
+        {
+            bool i = (dbSet == null);
+            return this.dbSet.SingleOrDefault(user => user.Login == login);
+        }
     }
 }

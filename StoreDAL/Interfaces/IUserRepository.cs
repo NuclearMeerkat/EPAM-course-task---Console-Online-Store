@@ -5,4 +5,5 @@ using StoreDAL.Entities;
 
 public interface IUserRepository : IRepository<User>
 {
+    User GetUserByLogin(string login);
 }

@@ -28,6 +28,29 @@ public static class UserController
         Menu.CreateExit();
     }
 
+    public static void LoginUser()
+    {
+        Console.WriteLine("Login: ");
+        var login = Console.ReadLine();
+        Console.WriteLine("Password: ");
+        var password = Console.ReadLine();
+
+        if (!string.IsNullOrEmpty(login) || !string.IsNullOrEmpty(password))
+        {
+            var userService = new UserService(context);
+            if (userService.Login(login, password) != null)
+            {
+                var user = userService.Login(login, password);
+                UserMenuController.Login(user);
+                Console.WriteLine("User existing");
+            }
+            else
+            {
+                Console.WriteLine("Wrong login or password. Try to login again");
+            }
+        }
+    }
+
     public static void UpdateUser()
     {
         throw new NotImplementedException();

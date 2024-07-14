@@ -23,6 +23,44 @@ public class UserService : ICrud
         this.userRepository = new UserRepository(context);
     }
 
+    public UserModel Login(string login, string password)
+    {
+        var userEntity = userRepository.GetUserByLogin(login);
+
+        if (userEntity == null)
+        {
+            return null;
+        }
+
+        bool isPasswordValid = false;
+
+        try
+        {
+            isPasswordValid = BCrypt.Net.BCrypt.Verify(password, userEntity.Password);
+        }
+        catch (BCrypt.Net.SaltParseException)
+        {
+            if (password == userEntity.Password)
+            {
+                isPasswordValid = true;
+            }
+        }
+
+        if (!isPasswordValid)
+        {
+            return null;
+        }
+
+        return new UserModel
+        {
+            Id = userEntity.Id,
+            Name = userEntity.Name,
+            LastName = userEntity.LastName,
+            Login = userEntity.Login,
+            RoleId = userEntity.RoleId,
+        };
+    }
+
     public void Add(AbstractModel model)
     {
         var x = (UserModel)model;
