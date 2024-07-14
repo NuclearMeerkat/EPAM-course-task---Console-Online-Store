@@ -11,9 +11,9 @@ public class GuestMainMenu : AbstractMenuCreator
     {
         (ConsoleKey id, string caption, Action action)[] array =
         {
-            (ConsoleKey.F1, "Login", () => { UserController.LoginUser(); }),
-            (ConsoleKey.F2, "Show product list", () => { UserController.ShowAllProductTitles(); }),
-            (ConsoleKey.F3, "Register", () => { UserController.AddUser(); }),
+            (ConsoleKey.F1, "Login", () => { UserMenuController.Login(); }),
+            (ConsoleKey.F2, "Show product list", () => { UserMenuController.ShowAllProductTitles(); }),
+            (ConsoleKey.F3, "Register", () => { UserMenuController.Register(); }),
         };
         return array;
     }

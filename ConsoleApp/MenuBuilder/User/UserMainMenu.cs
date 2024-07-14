@@ -10,11 +10,10 @@ public class UserMainMenu : AbstractMenuCreator
         (ConsoleKey id, string caption, Action action)[] array =
             {
                 (ConsoleKey.F1, "Logout", UserMenuController.Logout),
-                (ConsoleKey.F2, "Show product list", () => { Console.WriteLine("Show product list"); }),
-                (ConsoleKey.F3, "Show order list", () => { Console.WriteLine("show order list"); }),
-                (ConsoleKey.F4, "Cancel order", () => { Console.WriteLine("Cancel order"); }),
-                (ConsoleKey.F5, "Confirm order delivery", () => { Console.WriteLine("Confirm order delivery"); }),
-                (ConsoleKey.F6, "Add order feedback", () => { Console.WriteLine("Add order feedback"); }),
+                (ConsoleKey.F2, "Show product list", () => { UserMenuController.ShowAllProductTitles(); }),
+                (ConsoleKey.F3, "Show order list", () => { UserMenuController.ShowAllUserOrders(); }),
+                (ConsoleKey.F4, "Cancel order", () => { UserMenuController.CancelOrder(); }),
+                (ConsoleKey.F5, "Confirm order delivery", () => { UserMenuController.ConfirmDelivery(); }),
             };
         return array;
     }

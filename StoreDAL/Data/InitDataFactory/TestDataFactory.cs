@@ -34,9 +34,9 @@ public class TestDataFactory : AbstractDataFactory
         return new[]
         {
             new CustomerOrder(1, "2023-07-01 10:00:00", 1, 1),
-            new CustomerOrder(2, "2023-07-03 14:30:00", 2, 4),
+            new CustomerOrder(2, "2020-07-03 14:30:00", 2, 4),
             new CustomerOrder(3, "2023-07-04 09:00:00", 3, 1),
-            new CustomerOrder(4, "2023-07-05 16:45:00", 4, 7),
+            new CustomerOrder(4, "2021-07-05 16:45:00", 4, 7),
             new CustomerOrder(5, "2023-07-06 12:00:00", 5, 6),
         };
     }

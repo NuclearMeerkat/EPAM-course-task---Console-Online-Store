@@ -16,5 +16,44 @@ namespace StoreDAL.Repository
              : base(context)
         {
         }
+
+        public override IEnumerable<CustomerOrder> GetAll()
+        {
+            return dbSet
+                .Include(o => o.State)
+                .Include(o => o.User)
+                .ToList();
+        }
+
+        public List<CustomerOrder> GetOrdersByCustomerId(int customerId)
+        {
+            var orders = dbSet
+                .Include(o => o.State)
+                .Include(o => o.User)
+                .Where(o => o.UserId == customerId)
+                .ToList();
+
+            return orders;
+        }
+
+        //public void CancelOrder(int orderId)
+        //{
+        //    var order = dbSet.Find(orderId);
+        //    if (order != null)
+        //    {
+        //        order.OrderStateId = 8; // Now it always confirmed by client TODO
+        //        context.SaveChanges();
+        //    }
+        //}
+
+        //public void ConfirmOrderDelivery(int orderId)
+        //{
+        //    var order = dbSet.Find(orderId);
+        //    if (order != null)
+        //    {
+        //        order.OrderStateId = // Set to delivered state ID
+        //        context.SaveChanges();
+        //    }
+        //}
     }
 }

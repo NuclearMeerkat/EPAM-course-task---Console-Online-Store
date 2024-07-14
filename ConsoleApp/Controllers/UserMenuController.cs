@@ -1,9 +1,12 @@
+using ConsoleApp.Services;
 using ConsoleMenu;
 using ConsoleMenu.Builder;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using StoreBLL.Models;
 using StoreBLL.Services;
 using StoreDAL.Data;
 using StoreDAL.Data.InitDataFactory;
+using System.Diagnostics;
 
 namespace ConsoleApp1;
 
@@ -38,14 +41,18 @@ public static class UserMenuController
         get { return context; }
     }
 
-    public static void Login(UserModel registredUser)
+    public static void Login()
     {
-        userId = registredUser.Id;
-        if (registredUser.RoleId == 1)
+        var user = UserController.LoginUser();
+        var roleId = user.RoleId;
+
+        userId = user.Id;
+
+        if (roleId == 1)
         {
             userRole = UserRoles.Administrator;
         }
-        else if (registredUser.RoleId == 2)
+        else if (roleId == 2)
         {
             userRole = UserRoles.RegistredCustomer;
         }
@@ -63,6 +70,17 @@ public static class UserMenuController
         userRole = UserRoles.Guest;
     }
 
+    public static void ShowAllProductTitles()
+    {
+        UserController.ShowAllProductTitles();
+    }
+
+    public static void Register()
+    {
+        UserController.AddUser();
+        Logout();
+    }
+
     public static void Start()
     {
         ConsoleKey resKey;
@@ -72,5 +90,20 @@ public static class UserMenuController
                 resKey = RolesToMenu[userRole].RunOnce(ref updateItems);
         }
         while (resKey != ConsoleKey.Escape);
+    }
+
+    public static void ShowAllUserOrders()
+    {
+        ShopController.ShowAllUserOrders(userId);
+    }
+
+    internal static void CancelOrder()
+    {
+        ShopController.CancelOrder(userRole);
+    }
+
+    internal static void ConfirmDelivery()
+    {
+        ShopController.ConfirmDelivery(userRole);
     }
 }

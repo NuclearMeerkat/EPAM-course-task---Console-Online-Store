@@ -26,5 +26,5 @@ public class UserModel : AbstractModel
 
     public int RoleId { get; set; }
 
-    public List<OrderModel>? Orders { get; set; } // From Order entity
+    public List<CustomerOrderModel>? Orders { get; set; } // From Order entity
 }

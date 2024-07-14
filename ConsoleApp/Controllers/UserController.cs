@@ -24,12 +24,11 @@ public static class UserController
         var userModel = InputHelper.ReadUserModel();
         userService.Add(userModel);
         Console.WriteLine("UserAdded");
-
-        Menu.CreateExit();
     }
 
-    public static void LoginUser()
+    public static UserModel LoginUser()
     {
+        UserModel user = new UserModel();
         Console.WriteLine("Login: ");
         var login = Console.ReadLine();
         Console.WriteLine("Password: ");
@@ -40,8 +39,7 @@ public static class UserController
             var userService = new UserService(context);
             if (userService.Login(login, password) != null)
             {
-                var user = userService.Login(login, password);
-                UserMenuController.Login(user);
+                user = userService.Login(login, password);
                 Console.WriteLine("User existing");
             }
             else
@@ -49,6 +47,8 @@ public static class UserController
                 Console.WriteLine("Wrong login or password. Try to login again");
             }
         }
+
+        return user;
     }
 
     public static void UpdateUser()
@@ -121,8 +121,6 @@ public static class UserController
         {
             Console.WriteLine($"ID: {product.Id} {product.Title} {product.CategoryId}");
         }
-
-        Menu.CreateExit();
     }
 
     public static void AddManufacturer()
