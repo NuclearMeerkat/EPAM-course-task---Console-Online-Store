@@ -7,9 +7,10 @@ public class OrderStateModel : AbstractModel
     public OrderStateModel(int id, string stateName)
         : base(id)
     {
-        this.Id = id;
         this.StateName = stateName;
     }
+
+    public OrderStateModel() : base(0) { }
 
     public string StateName { get; set; }
 

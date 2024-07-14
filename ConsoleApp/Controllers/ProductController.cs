@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleApp.Helpers;
 using ConsoleApp1;
+using StoreBLL.Services;
 using StoreDAL.Data;
 
 namespace ConsoleApp.Controllers
@@ -59,7 +61,10 @@ namespace ConsoleApp.Controllers
 
         public static void AddProductTitle()
         {
-            throw new NotImplementedException();
+            var userService = new ProductTitleService(context);
+            var userModel = InputHelper.ReadProductTitleModel();
+            userService.Add(userModel);
+            Console.WriteLine("Product has been successfuly added ot catalog");
         }
 
         public static void UpdateProductTitle()

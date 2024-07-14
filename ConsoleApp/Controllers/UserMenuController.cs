@@ -1,3 +1,4 @@
+using ConsoleApp.Controllers;
 using ConsoleApp.Services;
 using ConsoleMenu;
 using ConsoleMenu.Builder;
@@ -97,13 +98,28 @@ public static class UserMenuController
         ShopController.ShowAllUserOrders(userId);
     }
 
-    internal static void CancelOrder()
+    public static void CancelOrder()
     {
         ShopController.CancelOrder(userRole);
     }
 
-    internal static void ConfirmDelivery()
+    public static void ConfirmDelivery()
     {
         ShopController.ConfirmDelivery(userRole);
+    }
+
+    public static void AddProductTitle()
+    {
+        ProductController.AddProductTitle();
+    }
+
+    internal static void ShowOrderList()
+    {
+        ShopController.ShowAllOrders();
+    }
+
+    internal static void ChageOrderStatus()
+    {
+        ShopController.ChangeOrderStatus();
     }
 }

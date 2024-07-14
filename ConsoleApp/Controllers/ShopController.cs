@@ -84,7 +84,12 @@ namespace ConsoleApp.Services
 
         public static void ShowAllOrders()
         {
-            throw new NotImplementedException();
+            var orderService = new CustomerOrderService(context);
+            var orders = orderService.GetAll().Select(u => (CustomerOrderModel)u);
+            foreach (var order in orders)
+            {
+                Console.WriteLine($"ID: {order.Id} {order.State} {order.OperationTime} ");
+            }
         }
 
         public static void ShowAllUserOrders(int userId)
@@ -127,6 +132,21 @@ namespace ConsoleApp.Services
             var service = new OrderStateService(context);
             var menu = new ContextMenu(new AdminContextMenuHandler(service, InputHelper.ReadOrderStateModel), service.GetAll);
             menu.Run();
+        }
+
+        public static void ChangeOrderStatus()
+        {
+            Console.WriteLine("Enter ID of your order");
+            int orderId = int.Parse(Console.ReadLine());
+            var orderService = new CustomerOrderService(context);
+            var order = (CustomerOrderModel)orderService.GetById(orderId);
+
+            Console.WriteLine("Enter ID of the required status");
+            int status = int.Parse(Console.ReadLine());
+            order.OrderStateId = status;
+
+            orderService.Update(order);
+            Console.WriteLine($"Status of the order №{order.Id} has been chaged");
         }
     }
 }

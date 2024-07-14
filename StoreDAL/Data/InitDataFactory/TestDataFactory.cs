@@ -34,10 +34,15 @@ public class TestDataFactory : AbstractDataFactory
         return new[]
         {
             new CustomerOrder(1, "2023-07-01 10:00:00", 1, 1),
-            new CustomerOrder(2, "2020-07-03 14:30:00", 2, 4),
+            new CustomerOrder(2, "2020-07-03 14:30:00", 2, 1),
             new CustomerOrder(3, "2023-07-04 09:00:00", 3, 1),
-            new CustomerOrder(4, "2021-07-05 16:45:00", 4, 7),
-            new CustomerOrder(5, "2023-07-06 12:00:00", 5, 6),
+            new CustomerOrder(4, "2021-07-05 16:45:00", 4, 1),
+            new CustomerOrder(5, "2023-07-06 12:00:00", 5, 1),
+            new CustomerOrder(6, "2023-07-07 13:15:00", 1, 1),
+            new CustomerOrder(7, "2023-07-08 11:30:00", 2, 1),
+            new CustomerOrder(8, "2023-07-09 14:00:00", 3, 1),
+            new CustomerOrder(9, "2023-07-10 15:45:00", 4, 1),
+            new CustomerOrder(10, "2023-07-11 16:00:00", 5, 1),
         };
     }
 
@@ -62,6 +67,11 @@ public class TestDataFactory : AbstractDataFactory
             new OrderDetail(3, 3, 3, 1.49m, 10),
             new OrderDetail(4, 4, 2, 1.49m, 5),
             new OrderDetail(5, 5, 5, 3.99m, 2),
+            new OrderDetail(6, 6, 8, 999.99m, 1),
+            new OrderDetail(7, 7, 9, 1299.99m, 1),
+            new OrderDetail(8, 8, 10, 499.99m, 1),
+            new OrderDetail(9, 9, 11, 49.99m, 3),
+            new OrderDetail(10, 10, 12, 5.99m, 10),
         };
     }
 
@@ -69,7 +79,7 @@ public class TestDataFactory : AbstractDataFactory
     {
         return new[]
         {
-            new OrderState(1, "New Orders"),
+            new OrderState(1, "New Order"),
             new OrderState(2, "Cancelled by user"),
             new OrderState(3, "Cancelled by administrator"),
             new OrderState(4, "Confirmed"),
@@ -91,6 +101,11 @@ public class TestDataFactory : AbstractDataFactory
             new Product(5, 5, 3, "Whole milk", 3.99m),
             new Product(6, 6, 4, "Blender", 199.99m),
             new Product(7, 7, 5, "Mixed spices", 4.99m),
+            new Product(8, 8, 8, "iPhone 13", 999.99m),
+            new Product(9, 9, 9, "MacBook Pro", 1299.99m),
+            new Product(10, 10, 10, "Canon EOS", 499.99m),
+            new Product(11, 11, 11, "Knife Set", 49.99m),
+            new Product(12, 12, 13, "Orange Juice", 5.99m),
         };
     }
 
@@ -105,6 +120,11 @@ public class TestDataFactory : AbstractDataFactory
             new ProductTitle(5, "Whole Milk", 7),
             new ProductTitle(6, "Blender", 11),
             new ProductTitle(7, "Mixed Spices", 12),
+            new ProductTitle(8, "iPhone 13", 8),
+            new ProductTitle(9, "MacBook Pro", 9),
+            new ProductTitle(10, "Canon EOS", 10),
+            new ProductTitle(11, "Knife Set", 11),
+            new ProductTitle(12, "Orange Juice", 13),
         };
     }
 
@@ -113,7 +133,7 @@ public class TestDataFactory : AbstractDataFactory
         return new[]
         {
             new User(1, "John", "Doe", "johndoe", "password123", 2),
-            new User(2, "Jane", "Smith", "janesmith", "password456", 2),
+            new User(2, "Jane", "Smith", "janesmith", "password456", 1),
             new User(3, "Emily", "Johnson", "emilyj", "password789", 2),
             new User(4, "Michael", "Brown", "michaelb", "password321", 2),
             new User(5, "Sarah", "Davis", "sarahd", "password654", 2),

@@ -33,7 +33,12 @@ public class OrderStateService : ICrud
 
     public IEnumerable<AbstractModel> GetAll()
     {
-        throw new NotImplementedException();
+        var orderStateEntities = this.repository.GetAll();
+        return orderStateEntities.Select(p => new OrderStateModel()
+        {
+            Id = p.Id,
+            StateName = p.StateName,
+        });
     }
 
     public AbstractModel GetById(int id)

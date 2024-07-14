@@ -93,9 +93,12 @@ public static class UserController
 
     public static void ShowAllUserRoles()
     {
-        var rolesService = new UserRoleService(context);
-        var menu = new ContextMenu(new AdminContextMenuHandler(rolesService, InputHelper.ReadUserRoleModel), rolesService.GetAll);
-        menu.Run();
+        var userService = new UserRoleService(context);
+        var userRoles = userService.GetAll().Select(u => (UserRoleModel)u);
+        foreach (var role in userRoles)
+        {
+            Console.WriteLine($"ID: {role.Id}, Name: {role.RoleName}");
+        }
     }
 
     public static void AddProductTitle()
