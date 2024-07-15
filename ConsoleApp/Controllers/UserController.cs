@@ -119,11 +119,8 @@ public static class UserController
     public static void ShowAllProductTitles()
     {
         var productService = new ProductTitleService(context);
-        var products = productService.GetAll().Select(u => (ProductTitleModel)u);
-        foreach (var product in products)
-        {
-            Console.WriteLine($"ID: {product.Id} {product.Title} {product.CategoryId}");
-        }
+        var menu = new ContextMenu(new GuestContextMenuHandler(productService, InputHelper.ReadOrderStateModel), productService.GetAll);
+        menu.Run();
     }
 
     public static void AddManufacturer()

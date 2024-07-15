@@ -44,7 +44,8 @@ public class ProductTitleService : ICrud
         return titleEntities.Select(x => new ProductTitleModel(
             x.Id,
             x.Title,
-            x.CategoryId));
+            x.CategoryId,
+            new CategoryModel(x.CategoryId, x.Category.Name)));
     }
 
     public AbstractModel GetById(int id)
@@ -58,7 +59,8 @@ public class ProductTitleService : ICrud
         return new ProductTitleModel(
             titleEntity.Id,
             titleEntity.Title,
-            titleEntity.CategoryId);
+            titleEntity.CategoryId,
+            new CategoryModel(titleEntity.CategoryId, titleEntity.Category.Name));
     }
 
     public void Update(AbstractModel model)

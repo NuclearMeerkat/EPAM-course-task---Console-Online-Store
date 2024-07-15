@@ -41,13 +41,14 @@ public class CustomerOrderService : ICrud
     public IEnumerable<AbstractModel> GetAll()
     {
         var titleEntities = this.customerOrderRepository.GetAll();
-        return titleEntities.Select(x => new CustomerOrderModel
+        return titleEntities.Select(x => new CustomerOrderModel()
         {
             Id = x.Id,
             UserId = x.UserId,
             OperationTime = x.OperationTime,
             OrderStateId = x.OrderStateId,
-            State = x.State.StateName,
+            State = new OrderStateModel(x.State.StateName),
+            User = new UserModel(x.User.Name, x.User.LastName, x.User.Login, x.User.Password, x.User.RoleId),
         });
     }
 
@@ -60,7 +61,8 @@ public class CustomerOrderService : ICrud
             UserId = x.UserId,
             OperationTime = x.OperationTime,
             OrderStateId = x.OrderStateId,
-            State = x.State.StateName,
+            State = new OrderStateModel(x.State.StateName),
+            User = new UserModel(x.User.Name, x.User.LastName, x.User.Login, x.User.Password, x.User.RoleId),
         });
     }
 

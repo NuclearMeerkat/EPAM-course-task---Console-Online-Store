@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using ConsoleApp.Controllers;
 using ConsoleApp.Handlers.ContextMenu;
 using ConsoleApp.Helpers;
-using ConsoleApp.Validators;
 using ConsoleApp1;
 using ConsoleMenu;
+using Mono.TextTemplating;
 using StoreBLL.Models;
 using StoreBLL.Services;
 using StoreDAL.Data;
@@ -103,7 +103,7 @@ namespace ConsoleApp.Services
             throw new NotImplementedException();
         }
 
-        public static void ShowOrder()
+        public static void ShowOrder(int id)
         {
             throw new NotImplementedException();
         }
@@ -124,7 +124,7 @@ namespace ConsoleApp.Services
             var orders = orderService.GetOrdersByCustomerId(userId).Select(u => (CustomerOrderModel)u);
             foreach (var order in orders)
             {
-                Console.WriteLine($"ID: {order.Id} {order.State} {order.OperationTime} ");
+                Console.WriteLine(order);
             }
         }
 
@@ -163,6 +163,7 @@ namespace ConsoleApp.Services
         public static void ChangeOrderStatus()
         {
             var orderService = new CustomerOrderService(context);
+            var orderStateSercice = new OrderStateService(context);
             int orderId;
             int status;
 
@@ -184,9 +185,15 @@ namespace ConsoleApp.Services
             Console.WriteLine("Enter ID of the required status");
             ShowAllOrderStates();
 
-            if (!int.TryParse(Console.ReadLine(), out status) || !GenericValidator<OrderStateModel>.ValidateEntityId(status))
+            if (!int.TryParse(Console.ReadLine(), out status))
             {
                 Console.WriteLine("Enter valid status ID");
+                return;
+            }
+
+            if (orderStateSercice.GetById(status) == null)
+            {
+                Console.WriteLine("Status with this ID is not existing");
                 return;
             }
 

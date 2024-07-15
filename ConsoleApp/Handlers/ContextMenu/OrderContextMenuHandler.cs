@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleApp.Services;
 using StoreBLL.Interfaces;
 using StoreBLL.Models;
 
@@ -36,7 +37,7 @@ public class OrderContextMenuHandler : ContextMenuHandler
         (ConsoleKey id, string caption, Action action)[] array =
             {
                  (ConsoleKey.V, "View Details", this.GetItemDetails),
-                 (ConsoleKey.V, "Change order status", this.EditItem),
+                 (ConsoleKey.V, "Change order status", ShopController.ChangeOrderStatus),
             };
         return array;
     }

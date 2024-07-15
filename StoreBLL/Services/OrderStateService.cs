@@ -47,6 +47,14 @@ public class OrderStateService : ICrud
 
     public void Update(AbstractModel model)
     {
-        throw new NotImplementedException();
+        var x = (OrderStateModel)model;
+        var userEntity = this.repository.GetById(x.Id);
+        if (userEntity != null)
+        {
+            userEntity.Id = x.Id;
+            userEntity.StateName = x.StateName;
+
+            this.repository.Update(userEntity);
+        }
     }
 }

@@ -10,6 +10,14 @@
 
     public class ProductTitleModel : AbstractModel
     {
+        public ProductTitleModel(int id, string? title, int CategoryId, CategoryModel category)
+            : base(id)
+        {
+            this.Title = title;
+            this.CategoryId = CategoryId;
+            this.Category = category;
+        }
+
         public ProductTitleModel(int id, string? title, int CategoryId)
             : base(id)
         {
@@ -17,11 +25,11 @@
             this.CategoryId = CategoryId;
         }
 
-        public ProductTitleModel(string? title, int CategoryId)
+        public ProductTitleModel(string? title, int categoryId)
             : base(default)
         {
             this.Title = title;
-            this.CategoryId = CategoryId;
+            this.CategoryId = categoryId;
         }
 
         public ProductTitleModel() : base(0)
@@ -32,9 +40,11 @@
 
         public int CategoryId { get; set; }
 
+        public CategoryModel Category { get; set; }
+
         public override string? ToString()
         {
-            return $"Id:{this.Id} {this.Title} {this.CategoryId}";
+            return $"Id:{this.Id} {this.Title} {this.CategoryId} {this.Category.CategoryName}";
         }
     }
 }
