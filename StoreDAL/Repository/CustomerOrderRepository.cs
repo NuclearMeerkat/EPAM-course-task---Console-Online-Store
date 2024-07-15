@@ -19,7 +19,7 @@ namespace StoreDAL.Repository
 
         public override IEnumerable<CustomerOrder> GetAll()
         {
-            return dbSet
+            return this.dbSet
                 .Include(o => o.State)
                 .Include(o => o.User)
                 .ToList();
@@ -27,7 +27,7 @@ namespace StoreDAL.Repository
 
         public List<CustomerOrder> GetOrdersByCustomerId(int customerId)
         {
-            var orders = dbSet
+            var orders = this.dbSet
                 .Include(o => o.State)
                 .Include(o => o.User)
                 .Where(o => o.UserId == customerId)

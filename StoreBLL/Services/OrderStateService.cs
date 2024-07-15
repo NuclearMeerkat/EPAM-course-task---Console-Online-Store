@@ -1,60 +1,90 @@
-﻿namespace StoreBLL.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using StoreBLL.Interfaces;
-using StoreBLL.Models;
-using StoreDAL.Data;
-using StoreDAL.Entities;
-using StoreDAL.Interfaces;
-using StoreDAL.Repository;
-
-public class OrderStateService : ICrud
+﻿namespace StoreBLL.Services
 {
-    private readonly IOrderStateRepository repository;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using StoreBLL.Interfaces;
+    using StoreBLL.Models;
+    using StoreDAL.Data;
+    using StoreDAL.Entities;
+    using StoreDAL.Interfaces;
+    using StoreDAL.Repository;
 
-    public OrderStateService(StoreDbContext context)
+    /// <summary>
+    /// Provides services related to order states, including CRUD operations.
+    /// </summary>
+    public class OrderStateService : ICrud
     {
-        this.repository = new OrderStateRepository(context);
-    }
+        private readonly IOrderStateRepository repository;
 
-    public void Add(AbstractModel model)
-    {
-        var x = (OrderStateModel)model;
-        this.repository.Add(new OrderState(x.Id, x.StateName));
-    }
-
-    public void Delete(int modelId)
-    {
-        this.repository.DeleteById(modelId);
-    }
-
-    public IEnumerable<AbstractModel> GetAll()
-    {
-        var orderStateEntities = this.repository.GetAll();
-        return orderStateEntities.Select(p => new OrderStateModel(
-            p.Id,
-            p.StateName));
-    }
-
-    public AbstractModel GetById(int id)
-    {
-        var res = this.repository.GetById(id);
-        return new OrderStateModel(res.Id, res.StateName);
-    }
-
-    public void Update(AbstractModel model)
-    {
-        var x = (OrderStateModel)model;
-        var userEntity = this.repository.GetById(x.Id);
-        if (userEntity != null)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrderStateService"/> class with the specified context.
+        /// </summary>
+        /// <param name="context">The database context used for data operations.</param>
+        public OrderStateService(StoreDbContext context)
         {
-            userEntity.Id = x.Id;
-            userEntity.StateName = x.StateName;
+            this.repository = new OrderStateRepository(context);
+        }
 
-            this.repository.Update(userEntity);
+        /// <summary>
+        /// Adds a new order state to the repository.
+        /// </summary>
+        /// <param name="model">The order state model to add.</param>
+        public void Add(AbstractModel model)
+        {
+            var x = (OrderStateModel)model;
+            this.repository.Add(new OrderState(x.Id, x.StateName));
+        }
+
+        /// <summary>
+        /// Deletes an order state from the repository by its ID.
+        /// </summary>
+        /// <param name="modelId">The ID of the order state to delete.</param>
+        public void Delete(int modelId)
+        {
+            this.repository.DeleteById(modelId);
+        }
+
+        /// <summary>
+        /// Retrieves all order states from the repository.
+        /// </summary>
+        /// <returns>A collection of order state models.</returns>
+        public IEnumerable<AbstractModel> GetAll()
+        {
+            var orderStateEntities = this.repository.GetAll();
+            return orderStateEntities.Select(p => new OrderStateModel(
+                p.Id,
+                p.StateName));
+        }
+
+        /// <summary>
+        /// Retrieves an order state by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the order state to retrieve.</param>
+        /// <returns>The order state model if found; otherwise, <c>null</c>.</returns>
+        public AbstractModel GetById(int id)
+        {
+            var res = this.repository.GetById(id);
+            return new OrderStateModel(res.Id, res.StateName);
+        }
+
+        /// <summary>
+        /// Updates an existing order state in the repository.
+        /// </summary>
+        /// <param name="model">The order state model to update.</param>
+        public void Update(AbstractModel model)
+        {
+            var x = (OrderStateModel)model;
+            var userEntity = this.repository.GetById(x.Id);
+            if (userEntity != null)
+            {
+                userEntity.Id = x.Id;
+                userEntity.StateName = x.StateName;
+
+                this.repository.Update(userEntity);
+            }
         }
     }
 }

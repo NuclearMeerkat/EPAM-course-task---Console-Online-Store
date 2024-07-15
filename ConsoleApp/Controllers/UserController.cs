@@ -1,145 +1,205 @@
-﻿namespace ConsoleApp.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConsoleApp1;
-using ConsoleApp.Controllers;
 using ConsoleApp.Handlers.ContextMenu;
 using ConsoleApp.Helpers;
+using ConsoleApp1;
 using ConsoleMenu;
-using StoreDAL.Data;
 using StoreBLL.Models;
 using StoreBLL.Services;
-using StoreDAL.Repository;
+using StoreDAL.Data;
 
-public static class UserController
+namespace ConsoleApp.Services
 {
-    private static StoreDbContext context = UserMenuController.Context;
-
-    public static void AddUser()
+    /// <summary>
+    /// Controller for managing users and related entities.
+    /// </summary>
+    public static class UserController
     {
-        var userService = new UserService(context);
-        var userModel = InputHelper.ReadUserModel();
-        userService.Add(userModel);
-        Console.WriteLine("UserAdded");
-    }
+        private static StoreDbContext context = UserMenuController.Context;
 
-    public static UserModel LoginUser()
-    {
-        UserModel user = new UserModel();
-        Console.WriteLine("LoginUser: ");
-        var login = Console.ReadLine();
-        Console.WriteLine("Password: ");
-        var password = Console.ReadLine();
-
-        if (!string.IsNullOrEmpty(login) || !string.IsNullOrEmpty(password))
+        /// <summary>
+        /// Adds a new user.
+        /// </summary>
+        public static void AddUser()
         {
             var userService = new UserService(context);
-            if (userService.LoginUser(login, password) != null)
-            {
-                user = userService.LoginUser(login, password);
-                Console.WriteLine("User existing");
-            }
-            else
-            {
-                Console.WriteLine("Wrong login or password. Try to login again");
-            }
+            var userModel = InputHelper.ReadUserModel();
+            userService.Add(userModel);
+            Console.WriteLine("User added");
         }
 
-        return user;
-    }
-
-    public static void UpdateUser()
-    {
-        throw new NotImplementedException();
-    }
-
-    public static void DeleteUser()
-    {
-        throw new NotImplementedException();
-    }
-
-    public static void ShowUser()
-    {
-        throw new NotImplementedException();
-    }
-
-    public static void ShowAllUsers()
-    {
-        var userService = new UserService(context);
-        var users = userService.GetAll().Select(u => (UserModel)u);
-        foreach (var user in users)
+        /// <summary>
+        /// Logs in a user.
+        /// </summary>
+        /// <returns>The logged-in user model.</returns>
+        public static UserModel LoginUser()
         {
-            Console.WriteLine($"ID: {user.Id}, Name: {user.Name}, LastName: {user.LastName}, LoginUser: {user.Login}, RoleId: {user.RoleId}");
+            UserModel user = new UserModel();
+            Console.WriteLine("LoginUser: ");
+            var login = Console.ReadLine();
+            Console.WriteLine("Password: ");
+            var password = Console.ReadLine();
+
+            if (!string.IsNullOrEmpty(login) || !string.IsNullOrEmpty(password))
+            {
+                var userService = new UserService(context);
+                if (userService.LoginUser(login, password) != null)
+                {
+                    user = userService.LoginUser(login, password);
+                    Console.WriteLine("User exists");
+                }
+                else
+                {
+                    Console.WriteLine("Wrong login or password. Try to login again");
+                }
+            }
+
+            return user;
         }
-    }
 
-    public static void AddUserRole()
-    {
-        throw new NotImplementedException();
-    }
-
-    public static void UpdateUserRole()
-    {
-        throw new NotImplementedException();
-    }
-
-    public static void DeleteUserRole()
-    {
-        throw new NotImplementedException();
-    }
-
-    public static void ShowAllUserRoles()
-    {
-        var userService = new UserRoleService(context);
-        var userRoles = userService.GetAll().Select(u => (UserRoleModel)u);
-        foreach (var role in userRoles)
+        /// <summary>
+        /// Updates an existing user.
+        /// </summary>
+        public static void UpdateUser()
         {
-            Console.WriteLine($"ID: {role.Id}, Name: {role.RoleName}");
+            throw new NotImplementedException();
         }
-    }
 
-    public static void AddProductTitle()
-    {
-        throw new NotImplementedException();
-    }
+        /// <summary>
+        /// Deletes a user.
+        /// </summary>
+        public static void DeleteUser()
+        {
+            throw new NotImplementedException();
+        }
 
-    public static void UpdateProductTitle()
-    {
-        throw new NotImplementedException();
-    }
+        /// <summary>
+        /// Shows details of a single user.
+        /// </summary>
+        public static void ShowUser()
+        {
+            throw new NotImplementedException();
+        }
 
-    public static void DeleteProductTitle()
-    {
-        throw new NotImplementedException();
-    }
+        /// <summary>
+        /// Shows all users.
+        /// </summary>
+        public static void ShowAllUsers()
+        {
+            var userService = new UserService(context);
+            var users = userService.GetAll().Select(u => (UserModel)u);
+            Console.WriteLine("======= Current DataSet ==========");
+            foreach (var user in users)
+            {
+                Console.WriteLine($"ID: {user.Id}, Name: {user.Name}, LastName: {user.LastName}, LoginUser: {user.Login}, RoleId: {user.RoleId}");
+            }
+            Console.WriteLine("===================================");
+        }
 
-    public static void ShowAllProductTitles()
-    {
-        var productService = new ProductTitleService(context);
-        var menu = new ContextMenu(new GuestContextMenuHandler(productService, InputHelper.ReadOrderStateModel), productService.GetAll);
-        menu.Run();
-    }
+        /// <summary>
+        /// Adds a new user role.
+        /// </summary>
+        public static void AddUserRole()
+        {
+            throw new NotImplementedException();
+        }
 
-    public static void AddManufacturer()
-    {
-        throw new NotImplementedException();
-    }
+        /// <summary>
+        /// Updates an existing user role.
+        /// </summary>
+        public static void UpdateUserRole()
+        {
+            throw new NotImplementedException();
+        }
 
-    public static void UpdateManufacturer()
-    {
-        throw new NotImplementedException();
-    }
+        /// <summary>
+        /// Deletes a user role.
+        /// </summary>
+        public static void DeleteUserRole()
+        {
+            throw new NotImplementedException();
+        }
 
-    public static void DeleteManufacturer()
-    {
-        throw new NotImplementedException();
-    }
+        /// <summary>
+        /// Shows all user roles.
+        /// </summary>
+        public static void ShowAllUserRoles()
+        {
+            var userService = new UserRoleService(context);
+            var userRoles = userService.GetAll().Select(u => (UserRoleModel)u);
+            Console.WriteLine("======= Current DataSet ==========");
+            foreach (var role in userRoles)
+            {
+                Console.WriteLine($"ID: {role.Id}, Name: {role.RoleName}");
+            }
+            Console.WriteLine("===================================");
+        }
 
-    public static void ShowAllManufacturers()
-    {
-        throw new NotImplementedException();
+        /// <summary>
+        /// Adds a new product title.
+        /// </summary>
+        public static void AddProductTitle()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Updates an existing product title.
+        /// </summary>
+        public static void UpdateProductTitle()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Deletes a product title.
+        /// </summary>
+        public static void DeleteProductTitle()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Shows all product titles.
+        /// </summary>
+        public static void ShowAllProductTitles()
+        {
+            var productService = new ProductTitleService(context);
+            var menu = new ContextMenu(new GuestContextMenuHandler(productService, InputHelper.ReadOrderStateModel), productService.GetAll);
+            menu.Run();
+        }
+
+        /// <summary>
+        /// Adds a new manufacturer.
+        /// </summary>
+        public static void AddManufacturer()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Updates an existing manufacturer.
+        /// </summary>
+        public static void UpdateManufacturer()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Deletes a manufacturer.
+        /// </summary>
+        public static void DeleteManufacturer()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Shows all manufacturers.
+        /// </summary>
+        public static void ShowAllManufacturers()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
