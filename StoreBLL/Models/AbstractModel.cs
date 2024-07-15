@@ -11,5 +11,5 @@ public abstract class AbstractModel
         this.Id = id;
     }
 
-    public int Id { get; set; }
+    public int Id { get; private set; }
 }

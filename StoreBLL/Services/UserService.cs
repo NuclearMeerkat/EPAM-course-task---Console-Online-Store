@@ -7,6 +7,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Scaffolding;
+using SQLitePCL;
 using StoreBLL.Interfaces;
 using StoreBLL.Models;
 using StoreDAL.Data;
@@ -14,7 +15,7 @@ using StoreDAL.Entities;
 using StoreDAL.Interfaces;
 using StoreDAL.Repository;
 
-public class UserService : ICrud
+public class UserService : IUserService
 {
     private readonly IUserRepository userRepository;
 
@@ -23,7 +24,25 @@ public class UserService : ICrud
         this.userRepository = new UserRepository(context);
     }
 
-    public UserModel Login(string login, string password)
+    public UserModel GetUserByLogin(string login)
+    {
+        var userEntity = this.userRepository.GetUserByLogin(login);
+
+        if (userEntity == null)
+        {
+            return null;
+        }
+
+        return new UserModel(
+            userEntity.Id,
+            userEntity.Name,
+            userEntity.LastName,
+            userEntity.Login,
+            userEntity.Password,
+            userEntity.RoleId);
+    }
+
+    public UserModel LoginUser(string login, string password)
     {
         var userEntity = userRepository.GetUserByLogin(login);
 
@@ -51,14 +70,13 @@ public class UserService : ICrud
             return null;
         }
 
-        return new UserModel
-        {
-            Id = userEntity.Id,
-            Name = userEntity.Name,
-            LastName = userEntity.LastName,
-            Login = userEntity.Login,
-            RoleId = userEntity.RoleId,
-        };
+        return new UserModel(
+            userEntity.Id,
+            userEntity.Name,
+            userEntity.LastName,
+            userEntity.Login,
+            userEntity.Password,
+            userEntity.RoleId);
     }
 
     public void Add(AbstractModel model)
@@ -83,15 +101,13 @@ public class UserService : ICrud
     public IEnumerable<AbstractModel> GetAll()
     {
         var userEntities = this.userRepository.GetAll();
-        return userEntities.Select(u => new UserModel
-        {
-            Id = u.Id,
-            Name = u.Name,
-            LastName = u.LastName,
-            Login = u.Login,
-            Password = u.Password,
-            RoleId = u.RoleId,
-        });
+        return userEntities.Select(u => new UserModel(
+            u.Id,
+            u.Name,
+            u.LastName,
+            u.Login,
+            u.Password,
+            u.RoleId));
     }
 
     public AbstractModel GetById(int id)
@@ -102,15 +118,13 @@ public class UserService : ICrud
             return null;
         }
 
-        return new UserModel
-        {
-            Id = userEntity.Id,
-            Name = userEntity.Name,
-            LastName = userEntity.LastName,
-            Login = userEntity.Login,
-            Password = userEntity.Password,
-            RoleId = userEntity.RoleId,
-        };
+        return new UserModel(
+            userEntity.Id,
+            userEntity.Name,
+            userEntity.LastName,
+            userEntity.Login,
+            userEntity.Password,
+            userEntity.RoleId);
     }
 
     public void Update(AbstractModel model)
@@ -126,6 +140,7 @@ public class UserService : ICrud
             {
                 userEntity.Password = BCrypt.Net.BCrypt.HashPassword(x.Password);
             }
+
             userEntity.RoleId = x.RoleId;
 
             this.userRepository.Update(userEntity);

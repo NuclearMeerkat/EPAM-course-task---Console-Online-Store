@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using ConsoleApp.Controllers;
 using ConsoleApp.Services;
 using ConsoleMenu;
@@ -7,7 +8,6 @@ using StoreBLL.Models;
 using StoreBLL.Services;
 using StoreDAL.Data;
 using StoreDAL.Data.InitDataFactory;
-using System.Diagnostics;
 
 namespace ConsoleApp1;
 

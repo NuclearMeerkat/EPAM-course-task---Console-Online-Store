@@ -29,7 +29,7 @@ public static class UserController
     public static UserModel LoginUser()
     {
         UserModel user = new UserModel();
-        Console.WriteLine("Login: ");
+        Console.WriteLine("LoginUser: ");
         var login = Console.ReadLine();
         Console.WriteLine("Password: ");
         var password = Console.ReadLine();
@@ -37,9 +37,9 @@ public static class UserController
         if (!string.IsNullOrEmpty(login) || !string.IsNullOrEmpty(password))
         {
             var userService = new UserService(context);
-            if (userService.Login(login, password) != null)
+            if (userService.LoginUser(login, password) != null)
             {
-                user = userService.Login(login, password);
+                user = userService.LoginUser(login, password);
                 Console.WriteLine("User existing");
             }
             else
@@ -72,7 +72,7 @@ public static class UserController
         var users = userService.GetAll().Select(u => (UserModel)u);
         foreach (var user in users)
         {
-            Console.WriteLine($"ID: {user.Id}, Name: {user.Name}, LastName: {user.LastName}, Login: {user.Login}, RoleId: {user.RoleId}");
+            Console.WriteLine($"ID: {user.Id}, Name: {user.Name}, LastName: {user.LastName}, LoginUser: {user.Login}, RoleId: {user.RoleId}");
         }
     }
 

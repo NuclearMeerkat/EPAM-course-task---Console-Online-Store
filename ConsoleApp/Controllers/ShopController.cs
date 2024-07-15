@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ConsoleApp.Controllers;
 using ConsoleApp.Handlers.ContextMenu;
 using ConsoleApp.Helpers;
+using ConsoleApp.Validators;
 using ConsoleApp1;
 using ConsoleMenu;
 using StoreBLL.Models;
@@ -22,11 +23,24 @@ namespace ConsoleApp.Services
 
         public static void CancelOrder(UserRoles role)
         {
-            Console.WriteLine("Enter ID of your order");
-            int orderId = int.Parse(Console.ReadLine());
             var orderService = new CustomerOrderService(context);
+            int orderId;
+
+            Console.WriteLine("Enter ID of your order");
+
+            if (!int.TryParse(Console.ReadLine(), out orderId))
+            {
+                Console.WriteLine("Please, enter valid ID number");
+                return;
+            }
 
             var order = (CustomerOrderModel)orderService.GetById(orderId);
+
+            if (order == null)
+            {
+                Console.WriteLine("Order with this ID is not exist");
+                return;
+            }
 
             if (role == UserRoles.RegistredCustomer)
             {
@@ -43,11 +57,23 @@ namespace ConsoleApp.Services
 
         public static void ConfirmDelivery(UserRoles role)
         {
-            Console.WriteLine("Enter ID of your order");
-            int orderId = int.Parse(Console.ReadLine());
             var orderService = new CustomerOrderService(context);
+            int orderId;
+
+            Console.WriteLine("Enter ID of your order");
+            if (!int.TryParse(Console.ReadLine(), out orderId))
+            {
+                Console.WriteLine("Please, enter valid ID number");
+                return;
+            }
 
             var order = (CustomerOrderModel)orderService.GetById(orderId);
+
+            if (order == null)
+            {
+                Console.WriteLine("Order with this ID is not exist");
+                return;
+            }
 
             if (role == UserRoles.RegistredCustomer)
             {
@@ -136,13 +162,34 @@ namespace ConsoleApp.Services
 
         public static void ChangeOrderStatus()
         {
-            Console.WriteLine("Enter ID of your order");
-            int orderId = int.Parse(Console.ReadLine());
             var orderService = new CustomerOrderService(context);
+            int orderId;
+            int status;
+
+            Console.WriteLine("Enter ID of your order");
+            if (!int.TryParse(Console.ReadLine(), out orderId))
+            {
+                Console.WriteLine("Please, enter valid ID number");
+                return;
+            }
+
             var order = (CustomerOrderModel)orderService.GetById(orderId);
 
+            if (order == null)
+            {
+                Console.WriteLine("Order with this ID is not exist");
+                return;
+            }
+
             Console.WriteLine("Enter ID of the required status");
-            int status = int.Parse(Console.ReadLine());
+            ShowAllOrderStates();
+
+            if (!int.TryParse(Console.ReadLine(), out status) || !GenericValidator<OrderStateModel>.ValidateEntityId(status))
+            {
+                Console.WriteLine("Enter valid status ID");
+                return;
+            }
+
             order.OrderStateId = status;
 
             orderService.Update(order);

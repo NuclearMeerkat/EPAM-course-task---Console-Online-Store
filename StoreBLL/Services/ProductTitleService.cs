@@ -23,6 +23,7 @@ public class ProductTitleService : ICrud
     public void Add(AbstractModel model)
     {
         var x = (ProductTitleModel)model;
+
         var titleEntity = new ProductTitle
         {
             Id = x.Id,
@@ -40,12 +41,10 @@ public class ProductTitleService : ICrud
     public IEnumerable<AbstractModel> GetAll()
     {
         var titleEntities = this.productTitleRepository.GetAll();
-        return titleEntities.Select(x => new ProductTitleModel
-        {
-            Id = x.Id,
-            Title = x.Title,
-            CategoryId = x.CategoryId,
-        });
+        return titleEntities.Select(x => new ProductTitleModel(
+            x.Id,
+            x.Title,
+            x.CategoryId));
     }
 
     public AbstractModel GetById(int id)
@@ -56,12 +55,10 @@ public class ProductTitleService : ICrud
             return null;
         }
 
-        return new ProductTitleModel
-        {
-            Id = titleEntity.Id,
-            Title = titleEntity.Title,
-            CategoryId = titleEntity.CategoryId,
-        };
+        return new ProductTitleModel(
+            titleEntity.Id,
+            titleEntity.Title,
+            titleEntity.CategoryId);
     }
 
     public void Update(AbstractModel model)

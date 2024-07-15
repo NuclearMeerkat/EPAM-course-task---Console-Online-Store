@@ -14,7 +14,19 @@ public class UserModel : AbstractModel
         RoleId = roleId;
     }
 
-    public UserModel() : base(0) { }
+    public UserModel(string name, string lastName, string login, string password, int roleId)
+        : base(0)
+    {
+        Name = name;
+        LastName = lastName;
+        Login = login;
+        Password = password;
+        RoleId = roleId;
+    }
+
+    public UserModel() : base(0)
+    {
+    }
 
     public string Name { get; set; }
 

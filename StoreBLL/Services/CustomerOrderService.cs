@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.FlowAnalysis;
 using StoreBLL.Interfaces;
 using StoreBLL.Models;
 using StoreDAL.Data;
@@ -63,19 +64,15 @@ public class CustomerOrderService : ICrud
         });
     }
 
-    //public void CancelOrder(int orderId)
-    //{
-    //    this.customerOrderRepository.CancelOrder(orderId);
-    //}
-
-    //public void ConfirmOrderDelivery(int orderId)
-    //{
-    //    this.customerOrderRepository.ConfirmOrderDelivery(orderId);
-    //}
-
     public AbstractModel GetById(int id)
     {
         var res = this.customerOrderRepository.GetById(id);
+
+        if (res == null)
+        {
+            return null;
+        }
+
         return new CustomerOrderModel(res.Id, res.OperationTime, res.OrderStateId, res.UserId);
     }
 

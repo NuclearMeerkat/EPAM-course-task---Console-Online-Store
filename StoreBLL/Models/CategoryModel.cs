@@ -2,13 +2,23 @@
 using StoreDAL.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Cryptography.X509Certificates;
 
 public class CategoryModel : AbstractModel
 {
     public CategoryModel(int id, string name)
         : base(id)
     {
+        CategoryName = name;
     }
+
+    public CategoryModel(string name)
+        : base(default)
+    {
+        CategoryName = name;
+    }
+
+    public string CategoryName { get; set; }
 
     public override string ToString()
     {

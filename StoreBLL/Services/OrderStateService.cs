@@ -34,11 +34,9 @@ public class OrderStateService : ICrud
     public IEnumerable<AbstractModel> GetAll()
     {
         var orderStateEntities = this.repository.GetAll();
-        return orderStateEntities.Select(p => new OrderStateModel()
-        {
-            Id = p.Id,
-            StateName = p.StateName,
-        });
+        return orderStateEntities.Select(p => new OrderStateModel(
+            p.Id,
+            p.StateName));
     }
 
     public AbstractModel GetById(int id)

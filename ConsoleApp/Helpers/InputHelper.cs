@@ -6,10 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StoreBLL.Models;
+using StoreBLL.Services;
+using ConsoleApp1;
+using StoreDAL.Data;
+using ConsoleApp.Controllers;
 
 internal static class InputHelper
 {
-    public static CategoryModel ReadCategoryiModel()
+    private static StoreDbContext context = UserMenuController.Context;
+
+    public static CategoryModel ReadCategoryModel()
     {
         throw new NotImplementedException();
     }
@@ -39,19 +45,30 @@ internal static class InputHelper
 
     public static ProductTitleModel ReadProductTitleModel()
     {
-        Console.WriteLine("Input new title id");
-        var id = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+        var category = new CategoryService(context);
+
         Console.WriteLine("Input title name");
         var title = Console.ReadLine();
-        Console.WriteLine("Input category id");
-        var categoryId = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-        return new ProductTitleModel(id, title, categoryId);
+        Console.WriteLine("Input required category id");
+        ProductController.ShowAllCategories();
+
+        int categoryId;
+
+        if (!int.TryParse(Console.ReadLine(), out categoryId))
+        {
+            Console.WriteLine("Not valid value, please, enter digit number");
+            return null;
+        }
+        else if (category.GetById(categoryId) == null)
+        {
+            Console.WriteLine("Category with this ID is not existing");
+            return null;
+        }
+        return new ProductTitleModel(title, categoryId);
     }
 
     public static UserModel ReadUserModel()
     {
-        Console.WriteLine("Input your unic id");
-        var id = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
         Console.WriteLine("Input your name");
         var name = Console.ReadLine();
         Console.WriteLine("Input your last name");
@@ -61,7 +78,7 @@ internal static class InputHelper
         Console.WriteLine("Enter your password");
         var password = Console.ReadLine();
         Console.WriteLine("Input your role id (1 - Guest, 2 - User, 3 - admin)");
-        var RoleId = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-        return new UserModel(id, name, lastName, login, password, RoleId);
+        var roleId = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+        return new UserModel(name, lastName, login, password, roleId);
     }
 }

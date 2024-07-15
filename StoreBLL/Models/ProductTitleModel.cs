@@ -1,13 +1,13 @@
-﻿using StoreDAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StoreBLL.Models
+﻿namespace StoreBLL.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using StoreDAL.Entities;
+
     public class ProductTitleModel : AbstractModel
     {
         public ProductTitleModel(int id, string? title, int CategoryId)
@@ -17,7 +17,16 @@ namespace StoreBLL.Models
             this.CategoryId = CategoryId;
         }
 
-        public ProductTitleModel() : base(0) { }
+        public ProductTitleModel(string? title, int CategoryId)
+            : base(default)
+        {
+            this.Title = title;
+            this.CategoryId = CategoryId;
+        }
+
+        public ProductTitleModel() : base(0)
+        {
+        }
 
         public string? Title { get; set; }
 

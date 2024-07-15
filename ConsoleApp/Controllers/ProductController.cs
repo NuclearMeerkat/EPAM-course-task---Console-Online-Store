@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ConsoleApp.Helpers;
 using ConsoleApp1;
+using StoreBLL.Models;
 using StoreBLL.Services;
 using StoreDAL.Data;
 
@@ -56,15 +57,24 @@ namespace ConsoleApp.Controllers
 
         public static void ShowAllCategories()
         {
-            throw new NotImplementedException();
+            var categoryService = new CategoryService(context);
+            var categories = categoryService.GetAll().Select(u => (CategoryModel)u);
+            foreach (var category in categories)
+            {
+                Console.WriteLine($"CategoryID: {category.Id}, Name: {category.CategoryName}");
+            }
+
         }
 
         public static void AddProductTitle()
         {
             var userService = new ProductTitleService(context);
             var userModel = InputHelper.ReadProductTitleModel();
-            userService.Add(userModel);
-            Console.WriteLine("Product has been successfuly added ot catalog");
+            if (userModel != null)
+            {
+                userService.Add(userModel);
+                Console.WriteLine("Product has been successfuly added ot catalog");
+            }
         }
 
         public static void UpdateProductTitle()

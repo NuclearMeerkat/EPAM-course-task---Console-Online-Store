@@ -10,7 +10,15 @@ public class OrderStateModel : AbstractModel
         this.StateName = stateName;
     }
 
-    public OrderStateModel() : base(0) { }
+    public OrderStateModel(string stateName)
+        : base(default)
+    {
+        this.StateName = stateName;
+    }
+
+    public OrderStateModel() : base(0)
+    {
+    }
 
     public string StateName { get; set; }
 

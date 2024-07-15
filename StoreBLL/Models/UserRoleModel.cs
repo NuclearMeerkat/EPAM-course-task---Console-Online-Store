@@ -7,7 +7,12 @@ public class UserRoleModel : AbstractModel
     public UserRoleModel(int id, string roleName)
         : base(id)
     {
-        this.Id = id;
+        this.RoleName = roleName;
+    }
+
+    public UserRoleModel(string roleName)
+        : base(default)
+    {
         this.RoleName = roleName;
     }
 
