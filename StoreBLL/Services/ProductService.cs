@@ -61,13 +61,36 @@
         public IEnumerable<AbstractModel> GetAll()
         {
             var productEntities = this.productRepository.GetAll();
+            var name = productEntities.First().Manufacturer.Name;
+            var man = productEntities.Select(p => new ManufacturerModel(p.Manufacturer.Id, p.Manufacturer.Name));
             return productEntities.Select(p => new ProductModel
-            {
-                TitleId = p.TitleId,
-                ManufacturerId = p.ManufacturerId,
-                UnitPrice = p.UnitPrice,
-                Description = p.Description,
-            });
+            (
+                p.Id,
+                p.TitleId,
+                p.ManufacturerId,
+                p.UnitPrice,
+                p.Description,
+                new ProductTitleModel(p.Title.Id, p.Title.Title, p.Title.CategoryId, new CategoryModel(p.Title.Category.Id, p.Title.Category.Name)),
+                new ManufacturerModel(p.Manufacturer.Id, p.Manufacturer.Name)));
+        }
+
+        /// <summary>
+        /// Retrieves all products from the repository.
+        /// </summary>
+        /// <returns>A collection of product models.</returns>
+        public IEnumerable<AbstractModel> GetAllByTitle(int titleId)
+        {
+            var productEntities = this.productRepository.GetAll();
+            return productEntities.Select(p => new ProductModel
+            (
+                p.Id,
+                p.TitleId,
+                p.ManufacturerId,
+                p.UnitPrice,
+                p.Description,
+                new ProductTitleModel(p.Title.Id, p.Title.Title, p.Title.CategoryId, new CategoryModel(p.Title.Category.Id, p.Title.Category.Name)),
+                new ManufacturerModel(p.Manufacturer.Id, p.Manufacturer.Name)))
+                .Where(p => p.TitleId == titleId);
         }
 
         /// <summary>
@@ -83,13 +106,18 @@
                 return null;
             }
 
-            return new ProductModel
-            {
-                TitleId = productEntity.TitleId,
-                ManufacturerId = productEntity.ManufacturerId,
-                UnitPrice = productEntity.UnitPrice,
-                Description = productEntity.Description,
-            };
+            var manufacturer = new ManufacturerModel(productEntity.Manufacturer.Id, productEntity.Manufacturer.Name);
+            var category = new CategoryModel(productEntity.Title.Category.Id, productEntity.Title.Category.Name);
+            var title = new ProductTitleModel(productEntity.Title.Id, productEntity.Title.Title, productEntity.Title.CategoryId, category);
+
+            return new ProductModel(
+                productEntity.Id,
+                productEntity.TitleId,
+                productEntity.ManufacturerId,
+                productEntity.UnitPrice,
+                productEntity.Description,
+                title,
+                manufacturer);
         }
 
         /// <summary>

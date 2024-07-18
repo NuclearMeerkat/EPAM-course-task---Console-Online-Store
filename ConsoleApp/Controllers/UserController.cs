@@ -161,7 +161,7 @@ namespace ConsoleApp.Services
         }
 
         /// <summary>
-        /// Shows all product titles.
+        /// Shows all product titles with details.
         /// </summary>
         public static void ShowAllProductTitles()
         {

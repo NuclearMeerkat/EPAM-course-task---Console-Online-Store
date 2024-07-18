@@ -35,7 +35,8 @@
         /// <exception cref="NotImplementedException">Thrown because the method is not implemented yet.</exception>
         public void Add(AbstractModel model)
         {
-            throw new NotImplementedException();
+            var x = (CategoryModel)model;
+            this.categoryRepository.Add(new Category(0, x.CategoryName));
         }
 
         /// <summary>
@@ -45,7 +46,7 @@
         /// <exception cref="NotImplementedException">Thrown because the method is not implemented yet.</exception>
         public void Delete(int modelId)
         {
-            throw new NotImplementedException();
+            this.categoryRepository.DeleteById(modelId);
         }
 
         /// <summary>
@@ -85,7 +86,14 @@
         /// <exception cref="NotImplementedException">Thrown because the method is not implemented yet.</exception>
         public void Update(AbstractModel model)
         {
-            throw new NotImplementedException();
+            var x = (CategoryModel)model;
+            var userEntity = this.categoryRepository.GetById(x.Id);
+            if (userEntity != null)
+            {
+                userEntity.Name = x.CategoryName;
+
+                this.categoryRepository.Update(userEntity);
+            }
         }
     }
 }

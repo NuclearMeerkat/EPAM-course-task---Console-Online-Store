@@ -39,4 +39,9 @@ public class UserModel : AbstractModel
     public int RoleId { get; set; }
 
     public List<CustomerOrderModel>? Orders { get; set; } // From Order entity
+
+    public override string? ToString()
+    {
+        return $"Name: {this.Name} Last name: {this.LastName} Login: {this.Login}";
+    }
 }

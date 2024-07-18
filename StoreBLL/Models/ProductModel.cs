@@ -10,15 +10,15 @@ namespace StoreBLL.Models;
 
 public class ProductModel : AbstractModel
 {
-    public ProductModel(int id, int titleId, int manufacturerId, decimal unitPrice, string? description, IList<OrderDetail>? orderDetails, ProductTitle productTitle, Manufacturer manufacturer)
+    public ProductModel(int id, int titleId, int manufacturerId, decimal unitPrice, string? description, ProductTitleModel productTitle, ManufacturerModel manufacturer)
         : base(id)
     {
         this.TitleId = titleId;
         this.ManufacturerId = manufacturerId;
         this.UnitPrice = unitPrice;
         this.Description = description;
-        this.OrderDetails = orderDetails;
-        this.ProductTitle = productTitle;
+        this.Title = productTitle;
+        this.Manufacturer = manufacturer;
     }
 
     public ProductModel() : base(0) { }
@@ -31,14 +31,14 @@ public class ProductModel : AbstractModel
 
     public string? Description { get; set; }
 
-    public ProductTitle ProductTitle { get; set; }
+    public ProductTitleModel Title { get; set; }
 
-    public Manufacturer Manufacturer {get; set;}
+    public ManufacturerModel Manufacturer {get; set;}
 
     public virtual IList<OrderDetail>? OrderDetails { get; set; }
 
     public override string? ToString()
     {
-        return $"ID:{Id} Price:{UnitPrice} Title:{ProductTitle.Title} Manufacturer:{Manufacturer.Name} Description:{Description} ";
+        return $"ID:{Id}\t Title:{Description} {Title.Title}\t Price:{UnitPrice}\t Manufacturer:{Manufacturer.Name}";
     }
 }

@@ -9,19 +9,19 @@ public class CategoryModel : AbstractModel
     public CategoryModel(int id, string name)
         : base(id)
     {
-        CategoryName = name;
+        this.CategoryName = name;
     }
 
     public CategoryModel(string name)
         : base(default)
     {
-        CategoryName = name;
+        this.CategoryName = name;
     }
 
     public string CategoryName { get; set; }
 
     public override string ToString()
     {
-        throw new NotImplementedException();
+        return $"Category name: {this.CategoryName}";
     }
 }

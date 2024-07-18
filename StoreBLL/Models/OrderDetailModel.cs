@@ -9,11 +9,10 @@ namespace StoreBLL.Models
 {
     public class OrderDetailModel : AbstractModel
     {
-        public OrderDetailModel(int id, int ProductId, string ProductName, decimal Price, int Amount)
+        public OrderDetailModel(int id, int ProductId,  decimal Price, int Amount)
         : base(id)
         {
             this.ProductId = ProductId;
-            this.ProductName = ProductName;
             this.Price = Price;
             this.Amount = Amount;
         }
@@ -22,10 +21,13 @@ namespace StoreBLL.Models
 
         public int ProductId { get; set; }
 
-        public string ProductName { get; set; }
-
         public decimal Price { get; set; }
 
         public int Amount { get; set; }
+
+        public override string? ToString()
+        {
+            return $"Price: {this.Price} Product amount: {this.Amount}";
+        }
     }
 }

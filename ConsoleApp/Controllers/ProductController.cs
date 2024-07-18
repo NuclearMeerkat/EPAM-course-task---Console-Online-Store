@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using ConsoleApp.Handlers.ContextMenu;
 using ConsoleApp.Helpers;
+using ConsoleApp.Services;
 using ConsoleApp1;
+using ConsoleMenu;
 using StoreBLL.Models;
 using StoreBLL.Services;
 using StoreDAL.Data;
@@ -41,11 +45,16 @@ namespace ConsoleApp.Controllers
         }
 
         /// <summary>
-        /// Shows details of a single product.
+        /// Shows details of a single product and then show dataset of all other products.
         /// </summary>
         public static void ShowProduct()
         {
-            throw new NotImplementedException();
+            var productService = new ProductService(context);
+
+            Console.WriteLine("Please, enter id of the product:");
+            int id = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+
+            Console.WriteLine(productService.GetById(id));
         }
 
         /// <summary>
@@ -53,7 +62,37 @@ namespace ConsoleApp.Controllers
         /// </summary>
         public static void ShowAllProducts()
         {
-            throw new NotImplementedException();
+            var productService = new ProductService(context);
+            var menu = new ContextMenu(new GuestContextMenuHandler(productService, InputHelper.ReadOrderStateModel), productService.GetAll);
+            menu.Run();
+        }
+
+        public static void ShowProductsByTitleId()
+        {
+            var productService = new ProductService(context);
+            var titleService = new ProductTitleService(context);
+
+            Console.WriteLine("Input record ID for more details");
+            int id = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.WriteLine();
+
+            if (id > titleService.GetAll().Count() || id < 1)
+            {
+                Console.WriteLine("*****This Id is not valid, try again*****\n");
+                return;
+            }
+
+            var title = (ProductTitleModel)titleService.GetById(id);
+            var products = productService.GetAllByTitle(id).Select(p => (ProductModel)p);
+
+            Console.WriteLine($"*** {title.Title} ***");
+            foreach (var product in products)
+            {
+                Console.WriteLine(product);
+            }
+            Console.WriteLine("*****************************************\n");
+
+            UserController.ShowAllProductTitles();
         }
 
         /// <summary>

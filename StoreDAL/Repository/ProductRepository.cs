@@ -16,5 +16,23 @@ namespace StoreDAL.Repository
              : base(context)
         {
         }
+
+        public override IEnumerable<Product> GetAll()
+        {
+            return this.dbSet
+                .Include(p => p.Manufacturer)
+                .Include(p => p.Title)
+                .ThenInclude(t => t.Category)
+                .ToList();
+        }
+
+        public override Product GetById(int id)
+        {
+            return this.dbSet
+                .Include(p => p.Manufacturer)
+                .Include(p => p.Title)
+                .ThenInclude(t => t.Category)
+                .FirstOrDefault(c => c.Id == id);
+        }
     }
 }

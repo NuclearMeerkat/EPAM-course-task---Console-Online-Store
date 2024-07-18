@@ -73,7 +73,14 @@
         /// <param name="model">The user role model to update.</param>
         public void Update(AbstractModel model)
         {
-            throw new NotImplementedException();
+            var x = (UserRoleModel)model;
+            var userEntity = this.repository.GetById(x.Id);
+            if (userEntity != null)
+            {
+                userEntity.RoleName = x.RoleName;
+
+                this.repository.Update(userEntity);
+            }
         }
     }
 }

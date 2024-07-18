@@ -44,7 +44,7 @@
 
         public override string? ToString()
         {
-            return $"Id:{this.Id} {this.Title} {this.CategoryId} {this.Category.CategoryName}";
+            return $"ID: {this.Id} \t Title: {this.Title} \t Category: {this.Category.CategoryName}\t";
         }
     }
 }
