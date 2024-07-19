@@ -10,6 +10,7 @@ using StoreBLL.Services;
 using ConsoleApp1;
 using StoreDAL.Data;
 using ConsoleApp.Controllers;
+using System.Data;
 
 internal static class InputHelper
 {
@@ -78,7 +79,18 @@ internal static class InputHelper
         Console.WriteLine("Enter your password");
         var password = Console.ReadLine();
         Console.WriteLine("Input your role id (1 - Guest, 2 - User, 3 - admin)");
-        var roleId = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+        int roleId;
+        bool checkIfValidInput = false;
+        do
+        {
+            checkIfValidInput = int.TryParse(Console.ReadLine(), out roleId);
+            if (!checkIfValidInput || roleId < 1 || roleId > 3)
+            {
+                checkIfValidInput = false;
+                Console.WriteLine("Not valid role id, try again:");
+            }
+        } while (!checkIfValidInput);
+
         return new UserModel(name, lastName, login, password, roleId);
     }
 }

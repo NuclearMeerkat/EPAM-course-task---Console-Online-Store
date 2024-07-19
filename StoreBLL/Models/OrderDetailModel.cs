@@ -1,4 +1,5 @@
-﻿using StoreDAL.Entities;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using StoreDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,27 @@ namespace StoreBLL.Models
 {
     public class OrderDetailModel : AbstractModel
     {
-        public OrderDetailModel(int id, int ProductId,  decimal Price, int Amount)
+        public OrderDetailModel(int id, int ProductId,  decimal Price, int Amount, int CustomerOrderId)
         : base(id)
         {
             this.ProductId = ProductId;
             this.Price = Price;
             this.Amount = Amount;
+            this.CustomerOrderId = CustomerOrderId;
+        }
+
+        public OrderDetailModel(int ProductId, decimal Price, int Amount, int CustomerOrderId)
+        : base(0)
+        {
+            this.ProductId = ProductId;
+            this.Price = Price;
+            this.Amount = Amount;
+            this.CustomerOrderId = CustomerOrderId;
         }
 
         public OrderDetailModel() : base(0) { }
+
+        public int CustomerOrderId { get; set; }
 
         public int ProductId { get; set; }
 
@@ -27,7 +40,7 @@ namespace StoreBLL.Models
 
         public override string? ToString()
         {
-            return $"Price: {this.Price} Product amount: {this.Amount}";
+            return $"{"ID:" + this.Id,-7} {"ProductID:" + this.ProductId,-15} {"Price:" + this.Price,-8} {"Amount:" + this.Amount,-10}";
         }
     }
 }

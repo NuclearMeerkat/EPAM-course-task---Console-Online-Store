@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleApp.Controllers;
+using ConsoleApp.Services;
+using ConsoleApp1;
 using StoreBLL.Interfaces;
 using StoreBLL.Models;
 
@@ -13,19 +16,24 @@ namespace ConsoleApp.Handlers.ContextMenu
         public ShoppingContextMenuHandler(ICrud service, Func<AbstractModel> readModel)
             : base(service, readModel)
         {
+
         }
 
         public void CreateOrder()
         {
-            throw new NotImplementedException();
+            ShopController.AddOrder();
+
         }
 
         public override (ConsoleKey id, string caption, Action action)[] GenerateMenuItems()
         {
             (ConsoleKey id, string caption, Action action)[] array =
                 {
-                     (ConsoleKey.V, "View Details", this.GetItemDetails),
-                     (ConsoleKey.A, "Add item to chart and create order", this.CreateOrder),
+                     (ConsoleKey.A, "Add item to chart", UserMenuController.AddOrderDetailsToChart),
+                     (ConsoleKey.V, "View chart", UserMenuController.ViewChart),
+                     (ConsoleKey.D, "Delete order from the chart", UserMenuController.DeleteOrderDetailFromChart),
+                     (ConsoleKey.C, "Confirm order", UserMenuController.ConfirmOrder),
+
                 };
             return array;
         }

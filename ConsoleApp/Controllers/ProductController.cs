@@ -58,15 +58,18 @@ namespace ConsoleApp.Controllers
         }
 
         /// <summary>
-        /// Shows all products.
+        /// Shows all products and transfers you to Guest menu.
         /// </summary>
         public static void ShowAllProducts()
         {
             var productService = new ProductService(context);
-            var menu = new ContextMenu(new GuestContextMenuHandler(productService, InputHelper.ReadOrderStateModel), productService.GetAll);
+            var menu = new ContextMenu(new ShoppingContextMenuHandler(productService, InputHelper.ReadOrderStateModel), productService.GetAll);
             menu.Run();
         }
 
+        /// <summary>
+        /// Shows all products related to the title id entered by the user.
+        /// </summary>
         public static void ShowProductsByTitleId()
         {
             var productService = new ProductService(context);
@@ -82,6 +85,8 @@ namespace ConsoleApp.Controllers
                 return;
             }
 
+            Console.Clear();
+
             var title = (ProductTitleModel)titleService.GetById(id);
             var products = productService.GetAllByTitle(id).Select(p => (ProductModel)p);
 
@@ -90,9 +95,8 @@ namespace ConsoleApp.Controllers
             {
                 Console.WriteLine(product);
             }
-            Console.WriteLine("*****************************************\n");
 
-            UserController.ShowAllProductTitles();
+            Console.WriteLine("*****************************************\n");
         }
 
         /// <summary>
@@ -165,11 +169,13 @@ namespace ConsoleApp.Controllers
         }
 
         /// <summary>
-        /// Shows all product titles.
+        /// Shows all product titles, transfers you to Order menu
         /// </summary>
         public static void ShowAllProductTitles()
         {
-            throw new NotImplementedException();
+            var productService = new ProductTitleService(context);
+            var menu = new ContextMenu(new ShoppingContextMenuHandler(productService, InputHelper.ReadOrderStateModel), productService.GetAll);
+            menu.Run();
         }
 
         /// <summary>

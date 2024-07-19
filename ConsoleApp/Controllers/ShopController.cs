@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ConsoleApp.Controllers;
 using ConsoleApp.Handlers.ContextMenu;
 using ConsoleApp.Helpers;
 using ConsoleApp1;
@@ -19,13 +20,14 @@ namespace ConsoleApp.Services
         private static StoreDbContext context = UserMenuController.Context;
 
         /// <summary>
-        /// Cancels an order based on the user's role.
+        /// Cancels an order based on the user's currentUserRole.
         /// </summary>
-        /// <param name="role">The role of the user.</param>
-        public static void CancelOrder(UserRoles role)
+        /// <param name="role">The currentUserRole of the user.</param>
+        public static void CancelOrder()
         {
             var orderService = new CustomerOrderService(context);
             int orderId;
+            var currentUserRole = UserMenuController.UserRole;
 
             Console.WriteLine("Enter ID of your order");
 
@@ -43,11 +45,11 @@ namespace ConsoleApp.Services
                 return;
             }
 
-            if (role == UserRoles.RegistredCustomer)
+            if (currentUserRole == UserRoles.RegistredCustomer)
             {
                 order.OrderStateId = 2; // Cancelled by user
             }
-            else if (role == UserRoles.Administrator)
+            else if (currentUserRole == UserRoles.Administrator)
             {
                 order.OrderStateId = 3; // Cancelled by administrator
             }
@@ -57,13 +59,14 @@ namespace ConsoleApp.Services
         }
 
         /// <summary>
-        /// Confirms the delivery of an order based on the user's role.
+        /// Confirms the delivery of an order based on the user's currentUserRole.
         /// </summary>
-        /// <param name="role">The role of the user.</param>
-        public static void ConfirmDelivery(UserRoles role)
+        /// <param name="role">The currentUserRole of the user.</param>
+        public static void ConfirmDelivery()
         {
             var orderService = new CustomerOrderService(context);
             int orderId;
+            var currentUserRole = UserMenuController.UserRole;
 
             Console.WriteLine("Enter ID of your order");
             if (!int.TryParse(Console.ReadLine(), out orderId))
@@ -80,11 +83,11 @@ namespace ConsoleApp.Services
                 return;
             }
 
-            if (role == UserRoles.RegistredCustomer)
+            if (currentUserRole == UserRoles.RegistredCustomer)
             {
                 order.OrderStateId = 8; // Confirmed by client
             }
-            else if (role == UserRoles.Administrator)
+            else if (currentUserRole == UserRoles.Administrator)
             {
                 order.OrderStateId = 4; // Confirmed
             }
@@ -98,7 +101,15 @@ namespace ConsoleApp.Services
         /// </summary>
         public static void AddOrder()
         {
-            throw new NotImplementedException();
+            var orderService = new CustomerOrderService(context);
+
+            // Creating new order with current time, New order state and current user id
+            var orderModel = new CustomerOrderModel(
+                DateTime.Now.ToString(),
+                1,
+                UserMenuController.UserId);
+
+            orderService.Add(orderModel);
         }
 
         /// <summary>
@@ -145,10 +156,10 @@ namespace ConsoleApp.Services
         /// Shows all orders for a specific user.
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
-        public static void ShowAllUserOrders(int userId)
+        public static void ShowAllUserOrders()
         {
             var orderService = new CustomerOrderService(context);
-            var orders = orderService.GetOrdersByCustomerId(userId).Select(u => (CustomerOrderModel)u);
+            var orders = orderService.GetOrdersByCustomerId(UserMenuController.UserId).Select(u => (CustomerOrderModel)u);
             Console.WriteLine("======= Current DataSet ==========");
             foreach (var order in orders)
             {
@@ -160,9 +171,29 @@ namespace ConsoleApp.Services
         /// <summary>
         /// Adds new order details.
         /// </summary>
-        public static void AddOrderDetails()
+        public static void AddOrderDetailsToChart()
         {
-            throw new NotImplementedException();
+            var productService = new ProductService(context);
+
+            Console.WriteLine("Enter id of the product you need");
+            int productId = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Enter the amount of product you need");
+            int productAmount = int.Parse(Console.ReadLine());
+
+            var product = (ProductModel)productService.GetById(productId);
+
+            var fullPrice = productAmount * product.UnitPrice;
+
+            var orderDetailModel = new OrderDetailModel(
+                productId,
+                fullPrice,
+                productAmount,
+                UserMenuController.UserId);
+
+            UserChartController.AddOrderDetailToChart(UserMenuController.UserId, orderDetailModel);
+
+            Console.WriteLine("Order was successfuly created!");
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ public class CustomerOrderModel : AbstractModel
     public CustomerOrderModel(int id, string orderDate, int orderStateId, int userId)
         : base(id)
     {
-        Id = id;
         OperationTime = orderDate;
         this.OrderStateId = orderStateId;
         UserId = userId;
@@ -27,7 +26,6 @@ public class CustomerOrderModel : AbstractModel
     public CustomerOrderModel(int id, string orderDate, int orderStateId, int userId, OrderStateModel state, UserModel user)
         : base(id)
     {
-        this.Id = id;
         this.OperationTime = orderDate;
         this.OrderStateId = orderStateId;
         this.UserId = userId;
@@ -36,8 +34,6 @@ public class CustomerOrderModel : AbstractModel
     }
 
     public CustomerOrderModel() : base(0) { }
-
-    public int Id { get; set; }
 
     public int UserId { get; set; }
 
@@ -53,6 +49,6 @@ public class CustomerOrderModel : AbstractModel
 
     public override string? ToString()
     {
-        return $"ID: {Id} Date:{OperationTime} State:{State.StateName} User:{User.Login}";
+        return $"{"ID:" + this.Id,-7} {"Operation time:" + this.OperationTime,-35} {"Price:" + this.State.StateName,-20} {"Amount:" + this.User.Login,-20}";
     }
 }

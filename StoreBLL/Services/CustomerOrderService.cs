@@ -62,15 +62,13 @@
         public IEnumerable<AbstractModel> GetAll()
         {
             var titleEntities = this.customerOrderRepository.GetAll();
-            return titleEntities.Select(x => new CustomerOrderModel()
-            {
-                Id = x.Id,
-                UserId = x.UserId,
-                OperationTime = x.OperationTime,
-                OrderStateId = x.OrderStateId,
-                State = new OrderStateModel(x.State.StateName),
-                User = new UserModel(x.User.Name, x.User.LastName, x.User.Login, x.User.Password, x.User.RoleId),
-            });
+            return titleEntities.Select(x => new CustomerOrderModel(
+                x.Id,
+                x.OperationTime,
+                x.OrderStateId,
+                x.UserId,
+                new OrderStateModel(x.State.StateName),
+                new UserModel(x.User.Name, x.User.LastName, x.User.Login, x.User.Password, x.User.RoleId)));
         }
 
         /// <summary>
@@ -81,15 +79,13 @@
         public IEnumerable<AbstractModel> GetOrdersByCustomerId(int userId)
         {
             var titleEntities = this.customerOrderRepository.GetOrdersByCustomerId(userId);
-            return titleEntities.Select(x => new CustomerOrderModel
-            {
-                Id = x.Id,
-                UserId = x.UserId,
-                OperationTime = x.OperationTime,
-                OrderStateId = x.OrderStateId,
-                State = new OrderStateModel(x.State.StateName),
-                User = new UserModel(x.User.Name, x.User.LastName, x.User.Login, x.User.Password, x.User.RoleId),
-            });
+            return titleEntities.Select(x => new CustomerOrderModel(
+                x.Id,
+                x.OperationTime,
+                x.OrderStateId,
+                x.UserId,
+                new OrderStateModel(x.State.StateName),
+                new UserModel(x.User.Name, x.User.LastName, x.User.Login, x.User.Password, x.User.RoleId)));
         }
 
         /// <summary>

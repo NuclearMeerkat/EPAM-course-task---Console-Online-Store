@@ -40,6 +40,7 @@ namespace ConsoleMenu
                 resKey = this.RunOnce(ref updateItems);
             }
             while (resKey != ConsoleKey.Escape);
+            Console.Clear();
         }
 
         public /*virtual*/ ConsoleKey RunOnce(ref bool updateItems)
@@ -97,6 +98,7 @@ namespace ConsoleMenu
                 }
             }
             while (res.Key != ConsoleKey.Escape);
+            Console.Clear();
         }
     }
 }

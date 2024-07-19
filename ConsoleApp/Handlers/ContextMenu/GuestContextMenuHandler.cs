@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleApp.Controllers;
+using ConsoleApp1;
 using StoreBLL.Interfaces;
 using StoreBLL.Models;
 
@@ -19,7 +20,7 @@ public class GuestContextMenuHandler : ContextMenuHandler
     {
         (ConsoleKey id, string caption, Action action)[] array =
             {
-                (ConsoleKey.V, "View Details", ProductController.ShowProductsByTitleId),
+                (ConsoleKey.V, "View Details", UserMenuController.ShowProductsByTitleId),
             };
         return array;
     }

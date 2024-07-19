@@ -39,6 +39,6 @@ public class ProductModel : AbstractModel
 
     public override string? ToString()
     {
-        return $"ID:{Id}\t Title:{Description} {Title.Title}\t Price:{UnitPrice}\t Manufacturer:{Manufacturer.Name}";
+        return $"{"ID:" + this.Id,-7} {"Title:" + this.Description + " " + this.Title.Title,-25} {"Price:" + this.UnitPrice,-13} {"Manufacturer:" + this.Manufacturer.Name,-10}";
     }
 }

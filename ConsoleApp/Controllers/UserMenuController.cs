@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using ConsoleApp.Controllers;
 using ConsoleApp.Services;
 using ConsoleMenu;
@@ -21,14 +22,16 @@ public enum UserRoles
 public static class UserMenuController
 {
     private static readonly Dictionary<UserRoles, Menu> RolesToMenu;
-    private static int userId;
-    private static UserRoles userRole;
     private static StoreDbContext context;
+
+    public static int UserId { get; private set; }
+
+    public static UserRoles UserRole { get; private set; }
 
     static UserMenuController()
     {
-        userId = 0;
-        userRole = UserRoles.Guest;
+        UserId = 0;
+        UserRole = UserRoles.Guest;
         RolesToMenu = new Dictionary<UserRoles, Menu>();
         var factory = new StoreDbFactory(new TestDataFactory());
         context = factory.CreateContext();
@@ -47,38 +50,41 @@ public static class UserMenuController
         var user = UserController.LoginUser();
         var roleId = user.RoleId;
 
-        userId = user.Id;
+        UserId = user.Id;
 
         if (roleId == 1)
         {
-            userRole = UserRoles.Administrator;
+            UserRole = UserRoles.Administrator;
         }
         else if (roleId == 2)
         {
-            userRole = UserRoles.RegistredCustomer;
+            UserRole = UserRoles.RegistredCustomer;
         }
         else
         {
             Console.WriteLine("Invalid credentials, logging in as Guest.");
-            userId = 0;
-            userRole = UserRoles.Guest;
+            UserId = 0;
+            UserRole = UserRoles.Guest;
         }
     }
 
     public static void Logout()
     {
-        userId = 0;
-        userRole = UserRoles.Guest;
+        UserId = 0;
+        UserRole = UserRoles.Guest;
     }
 
     public static void ShowAllProductTitles()
     {
+        Console.Clear();
         UserController.ShowAllProductTitles();
     }
 
     public static void Register()
     {
+        Console.Clear();
         UserController.AddUser();
+        Console.Clear();
         Logout();
     }
 
@@ -88,24 +94,24 @@ public static class UserMenuController
         bool updateItems = true;
         do
         {
-                resKey = RolesToMenu[userRole].RunOnce(ref updateItems);
+                resKey = RolesToMenu[UserRole].RunOnce(ref updateItems);
         }
         while (resKey != ConsoleKey.Escape);
     }
 
     public static void ShowAllUserOrders()
     {
-        ShopController.ShowAllUserOrders(userId);
+        ShopController.ShowAllUserOrders();
     }
 
     public static void CancelOrder()
     {
-        ShopController.CancelOrder(userRole);
+        ShopController.CancelOrder();
     }
 
     public static void ConfirmDelivery()
     {
-        ShopController.ConfirmDelivery(userRole);
+        ShopController.ConfirmDelivery();
     }
 
     public static void AddProductTitle()
@@ -113,13 +119,45 @@ public static class UserMenuController
         ProductController.AddProductTitle();
     }
 
-    internal static void ShowOrderList()
+    public static void ShowOrderList()
     {
         ShopController.ShowAllOrders();
     }
 
-    internal static void ChageOrderStatus()
+    public static void ChageOrderStatus()
     {
         ShopController.ChangeOrderStatus();
+    }
+
+    public static void ShowProductsByTitleId()
+    {
+        Console.Clear();
+        ProductController.ShowProductsByTitleId();
+        UserController.ShowAllProductTitles();
+    }
+
+    public static void AddOrderDetailsToChart()
+    {
+        ShopController.AddOrderDetailsToChart();
+    }
+
+    public static void ViewChart()
+    {
+        UserChartController.ViewUserChart(UserId);
+    }
+
+    public static void ConfirmOrder()
+    {
+        UserChartController.ConfirmOrder(UserId);
+    }
+
+    public static void ShowAllProducts()
+    {
+        ProductController.ShowAllProducts();
+    }
+
+    public static void DeleteOrderDetailFromChart()
+    {
+        UserChartController.DeleteOrderDetail(UserId);
     }
 }
