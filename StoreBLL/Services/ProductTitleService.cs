@@ -105,5 +105,13 @@
                 this.productTitleRepository.Update(titleEntity);
             }
         }
+
+        /// <summary>
+        /// Return count of the enteties in the specyfic DbSet.
+        /// </summary>
+        public int Count()
+        {
+            return this.productTitleRepository.Count();
+        }
     }
 }

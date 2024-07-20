@@ -47,6 +47,7 @@ public static class UserMenuController
 
     public static void Login()
     {
+        Console.Clear();
         var user = UserController.LoginUser();
         var roleId = user.RoleId;
 
@@ -60,6 +61,10 @@ public static class UserMenuController
         {
             UserRole = UserRoles.RegistredCustomer;
         }
+        else if (roleId == 3)
+        {
+            UserRole = UserRoles.Guest;
+        }
         else
         {
             Console.WriteLine("Invalid credentials, logging in as Guest.");
@@ -70,6 +75,7 @@ public static class UserMenuController
 
     public static void Logout()
     {
+        Console.Clear();
         UserId = 0;
         UserRole = UserRoles.Guest;
     }
@@ -101,31 +107,38 @@ public static class UserMenuController
 
     public static void ShowAllUserOrders()
     {
+        Console.Clear();
+
         ShopController.ShowAllUserOrders();
     }
 
     public static void CancelOrder()
     {
+        Console.Clear();
         ShopController.CancelOrder();
     }
 
     public static void ConfirmDelivery()
     {
+        Console.Clear();
         ShopController.ConfirmDelivery();
     }
 
     public static void AddProductTitle()
     {
+        Console.Clear();
         ProductController.AddProductTitle();
     }
 
     public static void ShowOrderList()
     {
+        Console.Clear();
         ShopController.ShowAllOrders();
     }
 
     public static void ChageOrderStatus()
     {
+        Console.Clear();
         ShopController.ChangeOrderStatus();
     }
 
@@ -151,7 +164,7 @@ public static class UserMenuController
         UserChartController.ConfirmOrder(UserId);
     }
 
-    public static void ShowAllProducts()
+    public static void ShowShopMenu()
     {
         ProductController.ShowAllProducts();
     }
@@ -159,5 +172,15 @@ public static class UserMenuController
     public static void DeleteOrderDetailFromChart()
     {
         UserChartController.DeleteOrderDetail(UserId);
+    }
+
+    public static void ShowAllProducts()
+    {
+        ShopController.ShowAllProducts();
+    }
+
+    internal static void ShowAllCategories()
+    {
+        ProductController.ShowAllCategories();
     }
 }

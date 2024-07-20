@@ -21,30 +21,6 @@ namespace ConsoleApp.Controllers
         private static StoreDbContext context = UserMenuController.Context;
 
         /// <summary>
-        /// Adds a new product.
-        /// </summary>
-        public static void AddProduct()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Updates an existing product.
-        /// </summary>
-        public static void UpdateProduct()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Deletes a product.
-        /// </summary>
-        public static void DeleteProduct()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Shows details of a single product and then show dataset of all other products.
         /// </summary>
         public static void ShowProduct()
@@ -52,7 +28,7 @@ namespace ConsoleApp.Controllers
             var productService = new ProductService(context);
 
             Console.WriteLine("Please, enter id of the product:");
-            int id = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            int id = ValidationHelper.ReadValidId(productService);
 
             Console.WriteLine(productService.GetById(id));
         }
@@ -76,15 +52,8 @@ namespace ConsoleApp.Controllers
             var titleService = new ProductTitleService(context);
 
             Console.WriteLine("Input record ID for more details");
-            int id = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            int id = ValidationHelper.ReadValidId(titleService);
             Console.WriteLine();
-
-            if (id > titleService.GetAll().Count() || id < 1)
-            {
-                Console.WriteLine("*****This Id is not valid, try again*****\n");
-                return;
-            }
-
             Console.Clear();
 
             var title = (ProductTitleModel)titleService.GetById(id);
@@ -100,42 +69,13 @@ namespace ConsoleApp.Controllers
         }
 
         /// <summary>
-        /// Adds a new category.
-        /// </summary>
-        public static void AddCategory()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Updates an existing category.
-        /// </summary>
-        public static void UpdateCategory()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Deletes a category.
-        /// </summary>
-        public static void DeleteCategory()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Shows all categories.
         /// </summary>
         public static void ShowAllCategories()
         {
-            var categoryService = new CategoryService(context);
-            var categories = categoryService.GetAll().Select(u => (CategoryModel)u);
-            Console.WriteLine("======= Current DataSet ==========");
-            foreach (var category in categories)
-            {
-                Console.WriteLine($"CategoryID: {category.Id}, Name: {category.CategoryName}");
-            }
-            Console.WriteLine("===================================");
+            var productService = new CategoryService(context);
+            var menu = new ContextMenu(new AdminContextMenuHandler(productService, InputHelper.ReadCategoryModel), productService.GetAll);
+            menu.Run();
         }
 
         /// <summary>
@@ -153,61 +93,13 @@ namespace ConsoleApp.Controllers
         }
 
         /// <summary>
-        /// Updates an existing product title.
-        /// </summary>
-        public static void UpdateProductTitle()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Deletes a product title.
-        /// </summary>
-        public static void DeleteProductTitle()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Shows all product titles, transfers you to Order menu
+        /// Shows all product titles, transfers you to Order menu.
         /// </summary>
         public static void ShowAllProductTitles()
         {
             var productService = new ProductTitleService(context);
-            var menu = new ContextMenu(new ShoppingContextMenuHandler(productService, InputHelper.ReadOrderStateModel), productService.GetAll);
+            var menu = new ContextMenu(new AdminContextMenuHandler(productService, InputHelper.ReadProductTitleModel), productService.GetAll);
             menu.Run();
-        }
-
-        /// <summary>
-        /// Adds a new manufacturer.
-        /// </summary>
-        public static void AddManufacturer()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Updates an existing manufacturer.
-        /// </summary>
-        public static void UpdateManufacturer()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Deletes a manufacturer.
-        /// </summary>
-        public static void DeleteManufacturer()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Shows all manufacturers.
-        /// </summary>
-        public static void ShowAllManufacturers()
-        {
-            throw new NotImplementedException();
         }
     }
 }

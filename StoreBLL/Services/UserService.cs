@@ -173,6 +173,7 @@
             var userEntity = this.userRepository.GetById(x.Id);
             if (userEntity != null)
             {
+                userEntity.Id = x.Id;
                 userEntity.Name = x.Name;
                 userEntity.LastName = x.LastName;
                 userEntity.Login = x.Login;
@@ -185,6 +186,14 @@
 
                 this.userRepository.Update(userEntity);
             }
+        }
+
+        /// <summary>
+        /// Return count of the enteties in the specyfic DbSet.
+        /// </summary>
+        public int Count()
+        {
+            return this.userRepository.Count();
         }
     }
 }

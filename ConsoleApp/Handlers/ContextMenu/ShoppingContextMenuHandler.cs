@@ -16,13 +16,6 @@ namespace ConsoleApp.Handlers.ContextMenu
         public ShoppingContextMenuHandler(ICrud service, Func<AbstractModel> readModel)
             : base(service, readModel)
         {
-
-        }
-
-        public void CreateOrder()
-        {
-            ShopController.AddOrder();
-
         }
 
         public override (ConsoleKey id, string caption, Action action)[] GenerateMenuItems()
@@ -33,7 +26,6 @@ namespace ConsoleApp.Handlers.ContextMenu
                      (ConsoleKey.V, "View chart", UserMenuController.ViewChart),
                      (ConsoleKey.D, "Delete order from the chart", UserMenuController.DeleteOrderDetailFromChart),
                      (ConsoleKey.C, "Confirm order", UserMenuController.ConfirmOrder),
-
                 };
             return array;
         }

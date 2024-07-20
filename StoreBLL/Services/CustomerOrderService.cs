@@ -122,5 +122,13 @@
                 this.customerOrderRepository.Update(orderEntity);
             }
         }
+
+        /// <summary>
+        /// Return count of the enteties in the specyfic DbSet.
+        /// </summary>
+        public int Count()
+        {
+            return this.customerOrderRepository.Count();
+        }
     }
 }

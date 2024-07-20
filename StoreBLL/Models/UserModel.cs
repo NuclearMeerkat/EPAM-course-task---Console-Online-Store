@@ -7,24 +7,25 @@ public class UserModel : AbstractModel
     public UserModel(int id, string name, string lastName, string login, string password, int roleId)
         : base(id)
     {
-        Name = name;
-        LastName = lastName;
-        Login = login;
-        Password = password;
-        RoleId = roleId;
+        this.Name = name;
+        this.LastName = lastName;
+        this.Login = login;
+        this.Password = password;
+        this.RoleId = roleId;
     }
 
     public UserModel(string name, string lastName, string login, string password, int roleId)
         : base(0)
     {
-        Name = name;
-        LastName = lastName;
-        Login = login;
-        Password = password;
-        RoleId = roleId;
+        this.Name = name;
+        this.LastName = lastName;
+        this.Login = login;
+        this.Password = password;
+        this.RoleId = roleId;
     }
 
-    public UserModel() : base(0)
+    public UserModel()
+        : base(0)
     {
     }
 
@@ -42,6 +43,6 @@ public class UserModel : AbstractModel
 
     public override string? ToString()
     {
-        return $"Name: {this.Name} Last name: {this.LastName} Login: {this.Login}";
+        return $"ID:{this.Id,-8} Name: {this.Name,-15} Last name: {this.LastName,-15} Login: {this.Login,-15}";
     }
 }

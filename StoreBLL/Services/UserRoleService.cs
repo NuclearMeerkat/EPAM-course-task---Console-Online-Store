@@ -64,6 +64,12 @@
         public AbstractModel GetById(int id)
         {
             var res = this.repository.GetById(id);
+
+            if (res == null)
+            {
+                return null;
+            }
+
             return new UserRoleModel(res.Id, res.RoleName);
         }
 
@@ -77,10 +83,19 @@
             var userEntity = this.repository.GetById(x.Id);
             if (userEntity != null)
             {
+                userEntity.Id = x.Id;
                 userEntity.RoleName = x.RoleName;
 
                 this.repository.Update(userEntity);
             }
+        }
+
+        /// <summary>
+        /// Return count of the enteties in the specyfic DbSet.
+        /// </summary>
+        public int Count()
+        {
+            return this.repository.Count();
         }
     }
 }

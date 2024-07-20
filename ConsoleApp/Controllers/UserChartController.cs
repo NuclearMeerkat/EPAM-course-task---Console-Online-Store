@@ -1,18 +1,21 @@
-﻿using ConsoleApp.Services;
-using ConsoleApp1;
-using StoreBLL.Models;
-using StoreBLL.Services;
-using StoreDAL.Data;
-using StoreDAL.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleApp.Services;
+using ConsoleApp1;
+using StoreBLL.Models;
+using StoreBLL.Services;
+using StoreDAL.Data;
+using StoreDAL.Entities;
 
 namespace ConsoleApp.Controllers
 {
+    /// <summary>
+    /// Singletone class which implement chart functionality for each user.
+    /// </summary>
     public static class UserChartController
     {
         private static Dictionary<int, List<OrderDetailModel>> userCharts = new Dictionary<int, List<OrderDetailModel>>();
@@ -29,6 +32,7 @@ namespace ConsoleApp.Controllers
             {
                 userCharts[userId] = new List<OrderDetailModel>();
             }
+
             return userCharts[userId];
         }
 
@@ -53,6 +57,8 @@ namespace ConsoleApp.Controllers
             var orderService = new CustomerOrderService(context);
 
             var chart = GetOrCreateChart(userId);
+
+            Console.Clear();
 
             if (chart == null || chart.Count == 0)
             {
@@ -82,6 +88,10 @@ namespace ConsoleApp.Controllers
             }
 
             userCharts[userId].Clear();
+
+            Console.WriteLine("************************************************");
+            Console.WriteLine("****************Order created!******************");
+            Console.WriteLine("************************************************\n");
         }
 
         public static void ViewUserChart(int userId)
@@ -111,6 +121,7 @@ namespace ConsoleApp.Controllers
 
         public static void DeleteOrderDetail(int userId)
         {
+            Console.Clear();
             Console.WriteLine("Enter the id of the order details you need to delete from the chart:");
             int id;
             if (!int.TryParse(Console.ReadLine(), out id) || id < 1 || id > userCharts[userId].Count)

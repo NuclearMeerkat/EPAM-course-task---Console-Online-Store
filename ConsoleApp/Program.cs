@@ -12,7 +12,6 @@ namespace ConsoleApp1
 {
     public static class Program
     {
-        // TODO: todo
         public static void Main(string[] args)
         {
             UserMenuController.Start();

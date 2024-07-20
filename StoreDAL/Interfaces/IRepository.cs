@@ -19,4 +19,6 @@ public interface IRepository<TEntity>
     void DeleteById(int id);
 
     void Update(TEntity entity);
+
+    int Count();
 }

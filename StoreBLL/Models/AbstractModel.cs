@@ -12,4 +12,10 @@ public abstract class AbstractModel
     }
 
     public int Id { get; private set; }
+
+    /// <summary>
+    /// Directive method for changing the ID.
+    /// </summary>
+    /// <param name="id">Model id.</param>
+    public void SetId(int id) => this.Id = id;
 }

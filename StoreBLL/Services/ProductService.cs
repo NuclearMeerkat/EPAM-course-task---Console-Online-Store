@@ -61,8 +61,6 @@
         public IEnumerable<AbstractModel> GetAll()
         {
             var productEntities = this.productRepository.GetAll();
-            var name = productEntities.First().Manufacturer.Name;
-            var man = productEntities.Select(p => new ManufacturerModel(p.Manufacturer.Id, p.Manufacturer.Name));
             return productEntities.Select(p => new ProductModel
             (
                 p.Id,
@@ -130,6 +128,7 @@
             var productEntity = this.productRepository.GetById(x.Id);
             if (productEntity != null)
             {
+                productEntity.Id = x.Id;
                 productEntity.TitleId = x.TitleId;
                 productEntity.ManufacturerId = x.ManufacturerId;
                 productEntity.UnitPrice = x.UnitPrice;
@@ -137,6 +136,14 @@
 
                 this.productRepository.Update(productEntity);
             }
+        }
+
+        /// <summary>
+        /// Return count of the enteties in the specyfic DbSet.
+        /// </summary>
+        public int Count()
+        {
+            return this.productRepository.Count();
         }
     }
 }

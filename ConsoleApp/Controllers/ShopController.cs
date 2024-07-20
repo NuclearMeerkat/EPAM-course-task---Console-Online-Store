@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using ConsoleApp.Controllers;
 using ConsoleApp.Handlers.ContextMenu;
@@ -26,24 +27,15 @@ namespace ConsoleApp.Services
         public static void CancelOrder()
         {
             var orderService = new CustomerOrderService(context);
-            int orderId;
             var currentUserRole = UserMenuController.UserRole;
 
-            Console.WriteLine("Enter ID of your order");
+            Console.Clear();
+            UserMenuController.ShowAllUserOrders();
 
-            if (!int.TryParse(Console.ReadLine(), out orderId))
-            {
-                Console.WriteLine("Please, enter a valid ID number");
-                return;
-            }
+            Console.WriteLine("Enter ID of your order");
+            int orderId = ValidationHelper.ReadValidId(orderService);
 
             var order = (CustomerOrderModel)orderService.GetById(orderId);
-
-            if (order == null)
-            {
-                Console.WriteLine("Order with this ID does not exist");
-                return;
-            }
 
             if (currentUserRole == UserRoles.RegistredCustomer)
             {
@@ -55,6 +47,9 @@ namespace ConsoleApp.Services
             }
 
             orderService.Update(order);
+
+            UserMenuController.ShowAllUserOrders();
+
             Console.WriteLine("Order was successfully canceled");
         }
 
@@ -65,23 +60,15 @@ namespace ConsoleApp.Services
         public static void ConfirmDelivery()
         {
             var orderService = new CustomerOrderService(context);
-            int orderId;
             var currentUserRole = UserMenuController.UserRole;
 
+            Console.Clear();
+            UserMenuController.ShowAllUserOrders();
             Console.WriteLine("Enter ID of your order");
-            if (!int.TryParse(Console.ReadLine(), out orderId))
-            {
-                Console.WriteLine("Please, enter a valid ID number");
-                return;
-            }
+            int orderId = ValidationHelper.ReadValidId(orderService);
+            Console.Clear();
 
             var order = (CustomerOrderModel)orderService.GetById(orderId);
-
-            if (order == null)
-            {
-                Console.WriteLine("Order with this ID does not exist");
-                return;
-            }
 
             if (currentUserRole == UserRoles.RegistredCustomer)
             {
@@ -93,6 +80,10 @@ namespace ConsoleApp.Services
             }
 
             orderService.Update(order);
+
+            Console.Clear();
+            UserMenuController.ShowAllUserOrders();
+
             Console.WriteLine("Thank you for using our services!");
         }
 
@@ -105,7 +96,7 @@ namespace ConsoleApp.Services
 
             // Creating new order with current time, New order state and current user id
             var orderModel = new CustomerOrderModel(
-                DateTime.Now.ToString(),
+                DateTime.Now.ToString(CultureInfo.InvariantCulture),
                 1,
                 UserMenuController.UserId);
 
@@ -113,43 +104,13 @@ namespace ConsoleApp.Services
         }
 
         /// <summary>
-        /// Updates an existing order.
-        /// </summary>
-        public static void UpdateOrder()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Deletes an order.
-        /// </summary>
-        public static void DeleteOrder()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Shows details of a specific order by ID.
-        /// </summary>
-        /// <param name="id">The ID of the order.</param>
-        public static void ShowOrder(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Shows all orders.
         /// </summary>
         public static void ShowAllOrders()
         {
-            var orderService = new CustomerOrderService(context);
-            var orders = orderService.GetAll().Select(u => (CustomerOrderModel)u);
-            Console.WriteLine("======= Current DataSet ==========");
-            foreach (var order in orders)
-            {
-                Console.WriteLine($"ID: {order.Id} {order.State} {order.OperationTime} ");
-            }
-            Console.WriteLine("===================================");
+            var service = new CustomerOrderService(context);
+            var menu = new ContextMenu(new AdminContextMenuHandler(service, InputHelper.ReadCustomerOrderModel), service.GetAll);
+            menu.Run();
         }
 
         /// <summary>
@@ -165,6 +126,7 @@ namespace ConsoleApp.Services
             {
                 Console.WriteLine(order);
             }
+
             Console.WriteLine("===================================");
         }
 
@@ -176,10 +138,12 @@ namespace ConsoleApp.Services
             var productService = new ProductService(context);
 
             Console.WriteLine("Enter id of the product you need");
-            int productId = int.Parse(Console.ReadLine());
+            int productId = ValidationHelper.ReadValidId(productService);
+            Console.Clear();
 
             Console.WriteLine("Enter the amount of product you need");
-            int productAmount = int.Parse(Console.ReadLine());
+            int productAmount = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.Clear();
 
             var product = (ProductModel)productService.GetById(productId);
 
@@ -192,40 +156,9 @@ namespace ConsoleApp.Services
                 UserMenuController.UserId);
 
             UserChartController.AddOrderDetailToChart(UserMenuController.UserId, orderDetailModel);
-
+            Console.WriteLine("******************************");
             Console.WriteLine("Order was successfuly created!");
-        }
-
-        /// <summary>
-        /// Updates existing order details.
-        /// </summary>
-        public static void UpdateOrderDetails()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Deletes order details.
-        /// </summary>
-        public static void DeleteOrderDetails()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Shows all order details.
-        /// </summary>
-        public static void ShowAllOrderDetails()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Processes an order.
-        /// </summary>
-        public static void ProcessOrder()
-        {
-            throw new NotImplementedException();
+            Console.WriteLine("******************************");
         }
 
         /// <summary>
@@ -244,44 +177,18 @@ namespace ConsoleApp.Services
         public static void ChangeOrderStatus()
         {
             var orderService = new CustomerOrderService(context);
-            var orderStateService = new OrderStateService(context);
-            int orderId;
-            int status;
 
-            Console.WriteLine("Enter ID of your order");
-            if (!int.TryParse(Console.ReadLine(), out orderId))
-            {
-                Console.WriteLine("Please, enter a valid ID number");
-                return;
-            }
-
-            var order = (CustomerOrderModel)orderService.GetById(orderId);
-
-            if (order == null)
-            {
-                Console.WriteLine("Order with this ID does not exist");
-                return;
-            }
-
-            Console.WriteLine("Enter ID of the required status");
-            ShowAllOrderStates();
-
-            if (!int.TryParse(Console.ReadLine(), out status))
-            {
-                Console.WriteLine("Enter valid status ID");
-                return;
-            }
-
-            if (orderStateService.GetById(status) == null)
-            {
-                Console.WriteLine("Status with this ID does not exist");
-                return;
-            }
-
-            order.OrderStateId = status;
-
+            var order = InputHelper.ReadOrderWithNewStatus();
             orderService.Update(order);
-            Console.WriteLine($"Status of order №{order.Id} has been changed");
+
+            Console.WriteLine($"Status of order ID:{order.Id} has been changed");
+        }
+
+        public static void ShowAllProducts()
+        {
+            var productService = new ProductService(context);
+            var menu = new ContextMenu(new AdminContextMenuHandler(productService, InputHelper.ReadProductModel), productService.GetAll);
+            menu.Run();
         }
     }
 }

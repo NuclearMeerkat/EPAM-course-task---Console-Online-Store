@@ -1,11 +1,5 @@
-﻿using Microsoft.VisualStudio.TextTemplating;
-using StoreDAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using StoreDAL.Entities;
+
 namespace StoreBLL.Models;
 
 public class ProductModel : AbstractModel
@@ -21,7 +15,39 @@ public class ProductModel : AbstractModel
         this.Manufacturer = manufacturer;
     }
 
-    public ProductModel() : base(0) { }
+    public ProductModel(int titleId, int manufacturerId, decimal unitPrice, string? description, ProductTitleModel productTitle, ManufacturerModel manufacturer)
+        : base(default)
+    {
+        this.TitleId = titleId;
+        this.ManufacturerId = manufacturerId;
+        this.UnitPrice = unitPrice;
+        this.Description = description;
+        this.Title = productTitle;
+        this.Manufacturer = manufacturer;
+    }
+
+    public ProductModel(int titleId, int manufacturerId, decimal unitPrice, string? description)
+        : base(default)
+    {
+        this.TitleId = titleId;
+        this.ManufacturerId = manufacturerId;
+        this.UnitPrice = unitPrice;
+        this.Description = description;
+    }
+
+    public ProductModel(int id, int titleId, int manufacturerId, decimal unitPrice, string? description)
+        : base(id)
+    {
+        this.TitleId = titleId;
+        this.ManufacturerId = manufacturerId;
+        this.UnitPrice = unitPrice;
+        this.Description = description;
+    }
+
+    public ProductModel()
+        : base(0)
+    {
+    }
 
     public int TitleId { get; set; }
 
@@ -33,7 +59,7 @@ public class ProductModel : AbstractModel
 
     public ProductTitleModel Title { get; set; }
 
-    public ManufacturerModel Manufacturer {get; set;}
+    public ManufacturerModel Manufacturer { get; set; }
 
     public virtual IList<OrderDetail>? OrderDetails { get; set; }
 

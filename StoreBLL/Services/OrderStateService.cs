@@ -67,6 +67,11 @@
         public AbstractModel GetById(int id)
         {
             var res = this.repository.GetById(id);
+            if (res == null)
+            {
+                return null;
+            }
+
             return new OrderStateModel(res.Id, res.StateName);
         }
 
@@ -85,6 +90,14 @@
 
                 this.repository.Update(userEntity);
             }
+        }
+
+        /// <summary>
+        /// Return count of the enteties in the specyfic DbSet.
+        /// </summary>
+        public int Count()
+        {
+            return this.repository.Count();
         }
     }
 }

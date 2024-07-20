@@ -68,15 +68,15 @@
         /// <returns>The category model if found; otherwise, <c>null</c>.</returns>
         public AbstractModel GetById(int id)
         {
-            var userEntity = this.categoryRepository.GetById(id);
-            if (userEntity == null)
+            var cateforyEntity = this.categoryRepository.GetById(id);
+            if (cateforyEntity == null)
             {
                 return null;
             }
 
             return new CategoryModel(
-                userEntity.Id,
-                userEntity.Name);
+                cateforyEntity.Id,
+                cateforyEntity.Name);
         }
 
         /// <summary>
@@ -94,6 +94,14 @@
 
                 this.categoryRepository.Update(userEntity);
             }
+        }
+
+        /// <summary>
+        /// Return count of the enteties in the specyfic DbSet.
+        /// </summary>
+        public int Count()
+        {
+            return this.categoryRepository.Count();
         }
     }
 }

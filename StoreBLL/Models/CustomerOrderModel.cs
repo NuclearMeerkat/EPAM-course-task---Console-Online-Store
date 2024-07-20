@@ -9,19 +9,18 @@ public class CustomerOrderModel : AbstractModel
     public CustomerOrderModel(int id, string orderDate, int orderStateId, int userId)
         : base(id)
     {
-        OperationTime = orderDate;
+        this.OperationTime = orderDate;
         this.OrderStateId = orderStateId;
-        UserId = userId;
+        this.UserId = userId;
     }
 
     public CustomerOrderModel(string orderDate, int orderStateId, int userId)
         : base(default)
     {
-        OperationTime = orderDate;
+        this.OperationTime = orderDate;
         this.OrderStateId = orderStateId;
-        UserId = userId;
+        this.UserId = userId;
     }
-
 
     public CustomerOrderModel(int id, string orderDate, int orderStateId, int userId, OrderStateModel state, UserModel user)
         : base(id)
@@ -33,7 +32,10 @@ public class CustomerOrderModel : AbstractModel
         this.User = user;
     }
 
-    public CustomerOrderModel() : base(0) { }
+    public CustomerOrderModel()
+        : base(0)
+    {
+    }
 
     public int UserId { get; set; }
 
@@ -41,7 +43,7 @@ public class CustomerOrderModel : AbstractModel
 
     public int OrderStateId { get; set; }
 
-    public OrderStateModel State{get; set; }
+    public OrderStateModel State { get; set; }
 
     public UserModel User { get; set; }
 
@@ -49,6 +51,6 @@ public class CustomerOrderModel : AbstractModel
 
     public override string? ToString()
     {
-        return $"{"ID:" + this.Id,-7} {"Operation time:" + this.OperationTime,-35} {"Price:" + this.State.StateName,-20} {"Amount:" + this.User.Login,-20}";
+        return $"{"ID:" + this.Id,-7} {"Operation time:" + this.OperationTime,-35} {"Order status:" + this.State.StateName,-45} {"User:" + this.User.Login,-20}";
     }
 }

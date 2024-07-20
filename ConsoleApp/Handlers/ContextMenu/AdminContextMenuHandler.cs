@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleApp.Helpers;
 using StoreBLL.Interfaces;
 using StoreBLL.Models;
 
@@ -23,16 +24,16 @@ public class AdminContextMenuHandler : ContextMenuHandler
     public void RemoveItem()
     {
         Console.WriteLine("Input record ID that will be removed");
-        int id = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+        int id = ValidationHelper.ReadValidId(this.service);
         this.service.Delete(id);
     }
 
     public void EditItem()
     {
         Console.WriteLine("Input record ID that will be edited");
-        int id = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+        int id = ValidationHelper.ReadValidId(this.service);
         var record = this.readModel();
-        // TODO
+        record.SetId(id);
         this.service.Update(record);
     }
 
@@ -43,7 +44,6 @@ public class AdminContextMenuHandler : ContextMenuHandler
                 (ConsoleKey.A, "Add Item", this.AddItem),
                 (ConsoleKey.R, "Remove Item", this.RemoveItem),
                 (ConsoleKey.E, "Edit Item", this.EditItem),
-                (ConsoleKey.V, "View Details", this.GetItemDetails),
             };
         return array;
     }

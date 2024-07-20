@@ -16,7 +16,8 @@ public class OrderStateModel : AbstractModel
         this.StateName = stateName;
     }
 
-    public OrderStateModel() : base(0)
+    public OrderStateModel()
+        : base(0)
     {
     }
 
@@ -24,6 +25,6 @@ public class OrderStateModel : AbstractModel
 
     public override string ToString()
     {
-        return $"Id:{this.Id} {this.StateName}";
+        return $"Id:{this.Id,-5} State name:{this.StateName,-30}";
     }
 }

@@ -18,6 +18,6 @@ public class ManufacturerModel : AbstractModel
 
     public override string ToString()
     {
-        return $"Name: {this.Name}";
+        return $"ID:{this.Id,-8} Name: {this.Name}";
     }
 }

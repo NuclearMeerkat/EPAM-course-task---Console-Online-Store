@@ -64,5 +64,10 @@ namespace StoreDAL.Repository
             this.dbSet.Update(entity);
             this.context.SaveChanges();
         }
+
+        public virtual int Count()
+        {
+            return this.dbSet.Count();
+        }
     }
 }
