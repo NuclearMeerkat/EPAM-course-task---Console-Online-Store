@@ -65,6 +65,7 @@ namespace ConsoleApp.Services
         /// </summary>
         public static void ShowAllUsers()
         {
+            Console.Clear();
             var service = new UserService(context);
             var menu = new ContextMenu(new AdminContextMenuHandler(service, InputHelper.ReadUserModel), service.GetAll);
             menu.Run();
@@ -75,6 +76,7 @@ namespace ConsoleApp.Services
         /// </summary>
         public static void ShowAllUserRoles()
         {
+            Console.Clear();
             var service = new UserRoleService(context);
             var menu = new ContextMenu(new AdminContextMenuHandler(service, InputHelper.ReadUserRoleModel), service.GetAll);
             menu.Run();
@@ -87,6 +89,13 @@ namespace ConsoleApp.Services
         {
             var productService = new ProductTitleService(context);
             var menu = new ContextMenu(new AdminContextMenuHandler(productService, InputHelper.ReadProductTitleModel), productService.GetAll);
+            menu.Run();
+        }
+
+        public static void ShowAllProductTitlesForGuest()
+        {
+            var productService = new ProductTitleService(context);
+            var menu = new ContextMenu(new GuestContextMenuHandler(productService, InputHelper.ReadProductTitleModel), productService.GetAll);
             menu.Run();
         }
     }

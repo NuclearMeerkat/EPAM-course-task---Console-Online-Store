@@ -144,11 +144,13 @@ public class TestDataFactory : AbstractDataFactory
     {
         return new[]
         {
-            new User(1, "John", "Doe", "johndoe", "password123", 2),
-            new User(2, "Jane", "Smith", "janesmith", "password456", 1),
-            new User(3, "Emily", "Johnson", "emilyj", "password789", 2),
-            new User(4, "Michael", "Brown", "michaelb", "password321", 2),
-            new User(5, "Sarah", "Davis", "sarahd", "password654", 2),
+            new User(1, "Maksym", "Puliak", "admin", "1", 1),
+            new User(2, "Maksym", "Puliak", "user", "1", 2),
+            new User(3, "John", "Doe", "johndoe", "password123", 2),
+            new User(4, "Jane", "Smith", "janesmith", "password456", 1),
+            new User(5, "Emily", "Johnson", "emilyj", "password789", 2),
+            new User(6, "Michael", "Brown", "michaelb", "password321", 2),
+            new User(7, "Sarah", "Davis", "sarahd", "password654", 2),
         };
     }
 

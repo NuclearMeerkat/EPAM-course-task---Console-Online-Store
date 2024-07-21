@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ConsoleApp.Controllers;
 using ConsoleApp.Handlers.ContextMenu;
-using ConsoleApp1;
 using StoreBLL.Interfaces;
 using StoreBLL.Models;
 
@@ -13,7 +9,7 @@ namespace ConsoleMenu
 {
     public class ContextMenu : Menu
     {
-        private Func<IEnumerable<AbstractModel>> getAll;
+        private readonly Func<IEnumerable<AbstractModel>> getAll;
 
         public ContextMenu(ContextMenuHandler controller, Func<IEnumerable<AbstractModel>> getAll)
             : base(controller.GenerateMenuItems())
@@ -35,18 +31,26 @@ namespace ConsoleMenu
             {
                 if (updateItems)
                 {
-                    Console.WriteLine("======= Current DataSet ==========");
+                    Console.WriteLine($"\n======= {this.getAll.Target.ToString().Split('.')[^1].Replace("Service", string.Empty)} ========");
                     foreach (var record in this.getAll())
                     {
                         Console.WriteLine(record.ToString());
                     }
-
                     Console.WriteLine("===================================");
+
+                    foreach (var item in this.items)
+                    {
+                        Console.WriteLine($"<{item.Key}>:\t  {item.Value}");
+                    }
+
+                    Console.WriteLine("Or press <Esc> to return");
+                    updateItems = false; // Ensure the dataset and menu items are printed only once per update
                 }
 
                 resKey = this.RunOnce(ref updateItems);
             }
             while (resKey != ConsoleKey.Escape);
+            Console.Clear();
         }
     }
 }

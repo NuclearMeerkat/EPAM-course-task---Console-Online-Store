@@ -13,15 +13,16 @@ public class AdminMainMenu : AbstractMenuCreator
             {
                 (ConsoleKey.F1, "Logout", UserMenuController.Logout),
                 (ConsoleKey.F2, "Shop menu", () => { UserMenuController.ShowShopMenu(); }),
-                (ConsoleKey.F3, "Show order list", () => { UserMenuController.ShowOrderList(); }),
+                (ConsoleKey.F3, "Order list", () => { UserMenuController.ShowOrderList(); }),
                 (ConsoleKey.F4, "Cancel order", () => { UserMenuController.CancelOrder(); }),
                 (ConsoleKey.F5, "Change order status", () => { UserMenuController.ChageOrderStatus(); }),
-                (ConsoleKey.F6, "Orders states", ShopController.ShowAllOrderStates),
-                (ConsoleKey.F7, "Show product title list", () => { UserMenuController.ShowAllProductTitles(); }),
-                (ConsoleKey.F7, "Show categories list", () => { UserMenuController.ShowAllCategories(); }),
-                (ConsoleKey.F8, "Show all products", UserMenuController.ShowAllProducts),
-                (ConsoleKey.F9, "User roles", UserController.ShowAllUserRoles),
-                (ConsoleKey.F10, "Show all users", UserController.ShowAllUsers),
+                (ConsoleKey.F6, "Orders states list", ShopController.ShowAllOrderStates),
+                (ConsoleKey.F7, "Product title list", () => { UserMenuController.ShowAllProductTitles(); }),
+                (ConsoleKey.F7, "Categories list", () => { UserMenuController.ShowAllCategories(); }),
+                (ConsoleKey.F8, "Products list", UserMenuController.ShowAllProducts),
+                (ConsoleKey.F9, "User roles list", UserController.ShowAllUserRoles),
+                (ConsoleKey.F10, "Users list", UserController.ShowAllUsers),
+                (ConsoleKey.F12, "Manufacturers list", ProductController.ShowAllManufacturers),
             };
         return array;
     }

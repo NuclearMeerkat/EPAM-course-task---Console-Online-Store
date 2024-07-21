@@ -24,10 +24,6 @@ public static class UserMenuController
     private static readonly Dictionary<UserRoles, Menu> RolesToMenu;
     private static StoreDbContext context;
 
-    public static int UserId { get; private set; }
-
-    public static UserRoles UserRole { get; private set; }
-
     static UserMenuController()
     {
         UserId = 0;
@@ -39,6 +35,10 @@ public static class UserMenuController
         RolesToMenu.Add(UserRoles.RegistredCustomer, new UserMainMenu().Create(context));
         RolesToMenu.Add(UserRoles.Administrator, new AdminMainMenu().Create(context));
     }
+
+    public static int UserId { get; private set; }
+
+    public static UserRoles UserRole { get; private set; }
 
     public static StoreDbContext Context
     {
@@ -146,41 +146,54 @@ public static class UserMenuController
     {
         Console.Clear();
         ProductController.ShowProductsByTitleId();
-        UserController.ShowAllProductTitles();
+        UserController.ShowAllProductTitlesForGuest();
     }
 
     public static void AddOrderDetailsToChart()
     {
+        Console.Clear();
         ShopController.AddOrderDetailsToChart();
     }
 
     public static void ViewChart()
     {
+        Console.Clear();
         UserChartController.ViewUserChart(UserId);
     }
 
     public static void ConfirmOrder()
     {
+        Console.Clear();
         UserChartController.ConfirmOrder(UserId);
     }
 
     public static void ShowShopMenu()
     {
+        Console.Clear();
         ProductController.ShowAllProducts();
     }
 
     public static void DeleteOrderDetailFromChart()
     {
+        Console.Clear();
         UserChartController.DeleteOrderDetail(UserId);
     }
 
     public static void ShowAllProducts()
     {
+        Console.Clear();
         ShopController.ShowAllProducts();
     }
 
-    internal static void ShowAllCategories()
+    public static void ShowAllCategories()
     {
+        Console.Clear();
         ProductController.ShowAllCategories();
+    }
+
+    public static void ShowAllProductTitlesForGuest()
+    {
+        Console.Clear();
+        UserController.ShowAllProductTitlesForGuest();
     }
 }

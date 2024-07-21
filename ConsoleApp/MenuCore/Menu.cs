@@ -6,7 +6,7 @@ namespace ConsoleMenu
 {
     public class Menu
     {
-        private readonly Dictionary<ConsoleKey, MenuItem> items;
+        public readonly Dictionary<ConsoleKey, MenuItem> items;
 
         public Menu()
         {
@@ -40,7 +40,6 @@ namespace ConsoleMenu
                 resKey = this.RunOnce(ref updateItems);
             }
             while (resKey != ConsoleKey.Escape);
-            Console.Clear();
         }
 
         public /*virtual*/ ConsoleKey RunOnce(ref bool updateItems)
@@ -50,7 +49,7 @@ namespace ConsoleMenu
             {
                     foreach (var item in this.items)
                     {
-                        Console.WriteLine($"<{item.Key}>:  {item.Value}");
+                        Console.WriteLine($"<{item.Key}>:\t  {item.Value}");
                     }
 
                     Console.WriteLine("Or press <Esc> to return");
@@ -80,7 +79,7 @@ namespace ConsoleMenu
                 {
                     foreach (var item in this.items)
                     {
-                        Console.WriteLine($"<{item.Key}>:  {item.Value}");
+                        Console.WriteLine($"<{item.Key}>:\t  {item.Value}");
                     }
 
                     Console.WriteLine("Or press <Esc> to return");
@@ -98,7 +97,6 @@ namespace ConsoleMenu
                 }
             }
             while (res.Key != ConsoleKey.Escape);
-            Console.Clear();
         }
     }
 }

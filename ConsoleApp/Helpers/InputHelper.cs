@@ -21,6 +21,16 @@ internal static class InputHelper
 {
     private static StoreDbContext context = UserMenuController.Context;
 
+    public static ManufacturerModel ReadManufacturerModel()
+    {
+        Console.Clear();
+        Console.WriteLine("Enter manufacturer name:");
+        string name = ValidationHelper.ReadValidString();
+        Console.Clear();
+
+        return new ManufacturerModel(name);
+    }
+
     public static CategoryModel ReadCategoryModel()
     {
         Console.Clear();
@@ -168,7 +178,7 @@ internal static class InputHelper
     /// <summary>
     /// Method to show all members from one of the DB sets.
     /// </summary>
-    /// <param text="userRoleService">ICrud obje</param>
+    /// <param text="userRoleService">ICrud object.</param>
     private static void GetAll(ICrud service)
     {
         foreach (var item in service.GetAll())

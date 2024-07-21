@@ -20,6 +20,14 @@ namespace ConsoleApp.Controllers
     {
         private static StoreDbContext context = UserMenuController.Context;
 
+        public static void ShowAllManufacturers()
+        {
+            Console.Clear();
+            var productService = new ManufacturerService(context);
+            var menu = new ContextMenu(new AdminContextMenuHandler(productService, InputHelper.ReadManufacturerModel), productService.GetAll);
+            menu.Run();
+        }
+
         /// <summary>
         /// Shows details of a single product and then show dataset of all other products.
         /// </summary>

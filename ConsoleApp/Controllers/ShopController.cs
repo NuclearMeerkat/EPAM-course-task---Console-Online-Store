@@ -119,6 +119,7 @@ namespace ConsoleApp.Services
         /// <param name="userId">The ID of the user.</param>
         public static void ShowAllUserOrders()
         {
+            Console.Clear();
             var orderService = new CustomerOrderService(context);
             var orders = orderService.GetOrdersByCustomerId(UserMenuController.UserId).Select(u => (CustomerOrderModel)u);
             Console.WriteLine("======= Current DataSet ==========");
@@ -157,7 +158,7 @@ namespace ConsoleApp.Services
 
             UserChartController.AddOrderDetailToChart(UserMenuController.UserId, orderDetailModel);
             Console.WriteLine("******************************");
-            Console.WriteLine("Order was successfuly created!");
+            Console.WriteLine("**Product added to the chart**");
             Console.WriteLine("******************************");
         }
 
@@ -166,6 +167,7 @@ namespace ConsoleApp.Services
         /// </summary>
         public static void ShowAllOrderStates()
         {
+            Console.Clear();
             var service = new OrderStateService(context);
             var menu = new ContextMenu(new AdminContextMenuHandler(service, InputHelper.ReadOrderStateModel), service.GetAll);
             menu.Run();

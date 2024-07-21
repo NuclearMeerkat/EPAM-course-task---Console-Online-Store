@@ -43,7 +43,11 @@ namespace ConsoleApp.Controllers
         /// <param name="order">The customer order to add.</param>
         public static void AddOrderDetailToChart(int userId, OrderDetailModel order)
         {
-            var chart = GetOrCreateChart(userId);
+            if (!userCharts.ContainsKey(userId))
+            {
+                userCharts[userId] = new List<OrderDetailModel>();
+            }
+
             userCharts[userId].Add(order);
         }
 
