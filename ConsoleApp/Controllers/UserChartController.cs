@@ -28,12 +28,13 @@ namespace ConsoleApp.Controllers
         /// <returns>The list of customer orders for the user.</returns>
         public static List<OrderDetailModel> GetOrCreateChart(int userId)
         {
-            if (!userCharts.ContainsKey(userId))
+            if (!userCharts.TryGetValue(userId, out List<OrderDetailModel>? value))
             {
-                userCharts[userId] = new List<OrderDetailModel>();
+                value = new List<OrderDetailModel>();
+                userCharts[userId] = value;
             }
 
-            return userCharts[userId];
+            return value;
         }
 
         /// <summary>
@@ -43,12 +44,13 @@ namespace ConsoleApp.Controllers
         /// <param name="order">The customer order to add.</param>
         public static void AddOrderDetailToChart(int userId, OrderDetailModel order)
         {
-            if (!userCharts.ContainsKey(userId))
+            if (!userCharts.TryGetValue(userId, out List<OrderDetailModel>? value))
             {
-                userCharts[userId] = new List<OrderDetailModel>();
+                value = new List<OrderDetailModel>();
+                userCharts[userId] = value;
             }
 
-            userCharts[userId].Add(order);
+            value.Add(order);
         }
 
         /// <summary>

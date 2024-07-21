@@ -76,6 +76,7 @@
         /// Retrieves all products from the repository.
         /// </summary>
         /// <returns>A collection of product models.</returns>
+        /// <param name="titleId">Title id.</param>
         public IEnumerable<AbstractModel> GetAllByTitle(int titleId)
         {
             var productEntities = this.productRepository.GetAll();

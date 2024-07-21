@@ -10,7 +10,7 @@ public class ProductTitle : BaseEntity
     {
     }
 
-    public ProductTitle(int id, string title, int categoryId)
+    public ProductTitle(int id, string? title, int categoryId)
         : base(id)
     {
         this.Title = title;

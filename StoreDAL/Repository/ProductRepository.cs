@@ -28,11 +28,23 @@ namespace StoreDAL.Repository
 
         public override Product GetById(int id)
         {
-            return this.dbSet
+            var product = this.dbSet
                 .Include(p => p.Manufacturer)
                 .Include(p => p.Title)
                 .ThenInclude(t => t.Category)
                 .FirstOrDefault(c => c.Id == id);
+
+            if (product == null)
+            {
+                throw new KeyNotFoundException($"Product with Id {id} was not found.");
+            }
+
+            // Perform additional null checks
+            product.Manufacturer ??= new Manufacturer(); // Ensure Manufacturer is not null
+            product.Title ??= new ProductTitle(); // Ensure Title is not null
+            product.Title.Category ??= new Category(); // Ensure Category is not null
+
+            return product;
         }
     }
 }

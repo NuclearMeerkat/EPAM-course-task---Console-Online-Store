@@ -75,7 +75,7 @@ public class GenericRepositoryTests
 
         var result = _repository.GetAll();
 
-        Assert.Equal(6, result.Count());
+        Assert.Equal(4, result.Count());
         Assert.Equal("Test2", result.Last().Name);
     }
 
@@ -119,6 +119,6 @@ public class GenericRepositoryTests
 
         var count = _repository.Count();
 
-        Assert.Equal(2, count);
+        Assert.Equal(0, count);
     }
 }

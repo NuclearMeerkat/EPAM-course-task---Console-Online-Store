@@ -191,6 +191,7 @@
         /// <summary>
         /// Return count of the enteties in the specyfic DbSet.
         /// </summary>
+        /// <returns>Count of elements in the sequence.</returns>
         public int Count()
         {
             return this.userRepository.Count();

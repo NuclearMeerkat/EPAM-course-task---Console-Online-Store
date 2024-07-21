@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StoreBLL\StoreBLL.csproj" />
     <ProjectReference Include="..\StoreDAL\StoreDAL.csproj" />
   </ItemGroup>
 

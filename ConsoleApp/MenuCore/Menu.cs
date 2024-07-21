@@ -56,9 +56,9 @@ namespace ConsoleMenu
             }
 
             res = Console.ReadKey(true);
-            if (this.items.ContainsKey(res.Key))
+            if (this.items.TryGetValue(res.Key, out MenuItem? value))
             {
-                this.items[res.Key].Action();
+                value.Action();
                 updateItems = true;
             }
             else
@@ -86,9 +86,9 @@ namespace ConsoleMenu
                 }
 
                 res = Console.ReadKey(true);
-                if (this.items.ContainsKey(res.Key))
+                if (this.items.TryGetValue(res.Key, out MenuItem? value))
                 {
-                    this.items[res.Key].Action();
+                    value.Action();
                     updateItems = true;
                 }
                 else

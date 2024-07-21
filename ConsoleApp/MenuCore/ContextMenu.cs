@@ -36,6 +36,7 @@ namespace ConsoleMenu
                     {
                         Console.WriteLine(record.ToString());
                     }
+
                     Console.WriteLine("===================================");
 
                     foreach (var item in this.items)

@@ -13,7 +13,7 @@ public class UserRole : BaseEntity
     {
     }
 
-    public UserRole(int id, string roleName)
+    public UserRole(int id, string? roleName)
         : base(id)
     {
         this.RoleName = roleName;
